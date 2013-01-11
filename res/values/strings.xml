@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2012-2013 Trento RISE
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+         http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either   express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<resources>
+
+    <string name="maps_api_key">0fdlLrw2lMFFg-TnfYFuceTi0m60-Q1mBF6EMFA</string>
+    <string name="empty" />
+    <string name="placeholder">&#8230;</string>
+    <string name="app_name">Journey Planner</string>
+    <string name="btn_planjourney">Plan \n journey</string>
+    <string name="btn_monitorrecurrent">Monitor recurrent \n journey</string>
+    <string name="btn_broadcast">Broadcast \n notifications</string>
+    <string name="btn_myprofile">My preferences</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_startmonitoring">Save &amp; monitor</string>
+    <string name="tab_plannew">New journey</string>
+    <string name="tab_myjourneys">My journeys</string>
+    <string name="tab_profile">Preferences</string>
+    <string name="tab_favorites">Favorites</string>
+    <string name="dialog_itineraryname_hint">Itinerary name</string>
+    <string name="plan_from">From&#8230;</string>
+    <string name="plan_to">To&#8230;</string>
+    <string name="plan_date">Date</string>
+    <string name="plan_time">Time</string>
+    <string name="plan_search">Search</string>
+    <string name="plan_custom_prefs">Customize preferences?</string>
+    <string name="plan_custom_prefs_off">No</string>
+    <string name="plan_custom_prefs_on">Yes</string>
+    <string name="monitor_off">Monitor OFF</string>
+    <string name="monitor_on">Monitor ON</string>
+    <string name="spinner_routes">Select a route</string>
+    <string name="spinner_stops">Select a stop</string>
+    <string name="spinner_stoptimes">Select a time</string>
+    <string name="form_busdelay_routes">Route</string>
+    <string name="form_busdelay_stop">Stop</string>
+    <string name="form_busdelay_time">Time</string>
+    <string name="form_busdelay_delay">Delay</string>
+    <string name="header_ttypes">Transport types</string>
+    <string name="header_rtypes">Preferred route</string>
+    <string name="tab_broadcast">New notification</string>
+    <string name="tab_news">News feed</string>
+    <string name="tmp">Coming soon!</string>
+    <string name="positionhint">Position</string>
+    <string name="bus">Bus</string>
+    <string name="car">Car</string>
+    <string name="van">Van</string>
+    <string name="bike">Bicycle</string>
+    <string name="train">Train</string>
+    <string name="other">Other</string>
+    <string name="send">Send notification</string>
+    <string name="trainnumber">Train number</string>
+    <string name="busline">Bus line</string>
+    <string name="strike">Strike ends at</string>
+    <string name="delay">Delay</string>
+    
+    <string name="app_failure_security">Failed to retrieve authentication data</string>
+    <string name="app_failure_setup">Failed to initialize application</string>
+    <string name="app_failure_operation">OOPS! An error occurred. Please check your connection or try again later.</string>
+
+    <string name="err_delay_fields_empty">You can\'t send an alert if one or more fields are empty</string>
+    
+    <string name="app_uid_label">SmartCampus</string>
+
+    <string name="from_field_empty">Select start position!</string>
+    <string name="to_field_empty">Select destination!</string>
+    <string name="datetime_before_now">You cannot plan a journey so far in the past!</string>
+    <string name="datetime_to_before_from">End date/time is before or equal to start date/time!</string>
+    
+    <string name="favorites_empty">Select an address</string>
+    <string name="favorites_saved">Added to favorites</string>
+    <string name="favorites_title">Favorites</string>
+    
+    <string name="address_dlg_current">My current location</string>
+    <string name="address_dlg_map">Point on map</string>
+    <string name="address_dlg_favorites">Favorite places</string>
+    <string name="address_dlg_title">Choose location</string>
+    
+    <string name="recur_time_from">From time</string>
+    <string name="recur_time_to">To time</string>
+    <string name="recur_date_from">From date</string>
+    <string name="recur_date_to">To date</string>
+    <string name="recur_name">Name</string>
+    <string name="recur_monitor">Monitor</string>
+    <string name="recurr_save">Save</string>
+    <string name="recurr_delete">Delete</string>
+    
+    <string name="from_time_field_empty">Select start time!</string>
+    <string name="to_time_field_empty">Select end time!</string>
+    <string name="from_date_field_empty">Select start date!</string>
+    <string name="to_date_field_empty">Select end date!</string>
+    <string name="name_field_empty">Specify name!</string>
+    
+    <string name="journey_saved_alert">Itinerary saved!</string>
+    <string name="recur_journey_saved_alert">Recurrent journey saved!</string>
+
+    <string name="to_date_before_from_date">Start date should be less than end date!</string>
+    <string name="interval_too_large">Specified time interval is too large. Please select smaller time interval.</string>
+    <string name="object_not_found">Object not found!</string>
+    
+    <string name="address_select_toast">Keep your finger pressed to select a location</string>
+    
+    <string name="title_broadcast">Broadcast notifications</string>
+    <string name="title_plan_single">Plan journey</string>
+    <string name="title_plan_recur">Recurrent journeys</string>
+    <string name="title_prefs">Manage preferences</string>
+</resources>
