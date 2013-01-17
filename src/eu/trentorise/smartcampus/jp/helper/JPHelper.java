@@ -40,7 +40,7 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
-import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
+import eu.trentorise.smartcampus.ac.authenticator.AMSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.GlobalConfig;
 import eu.trentorise.smartcampus.android.common.LocationHelper;
 import eu.trentorise.smartcampus.jp.Config;
@@ -60,7 +60,7 @@ public class JPHelper {
 
 	private static JPHelper instance = null;
 
-	private static SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+	private static SCAccessProvider accessProvider = new AMSCAccessProvider();
 
 	private Context mContext;
 
