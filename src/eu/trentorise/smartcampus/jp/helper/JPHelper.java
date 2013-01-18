@@ -160,7 +160,7 @@ public class JPHelper {
 		}
 	}
 
-	public static void monitorMyItinerary(boolean monitor, String id) throws ConnectionException, ProtocolException,
+	public static boolean monitorMyItinerary(boolean monitor, String id) throws ConnectionException, ProtocolException,
 			SecurityException {
 		if (id != null && id.length() > 0) {
 			MessageRequest req = new MessageRequest(GlobalConfig.getAppUrl(instance.mContext), Config.TARGET_ADDRESS + Config.CALL_MONITOR
@@ -169,7 +169,11 @@ public class JPHelper {
 			req.setBody("");
 
 			MessageResponse res = JPHelper.instance.getProtocolCarrier().invokeSync(req, Config.APP_TOKEN, getAuthToken());
+			
 		}
+		//se cambiato restituisce il valore del monitor
+		return monitor;
+
 	}
 
 	/*

@@ -132,9 +132,9 @@ public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 		 holder.monitor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				SCAsyncTask<String, Void, Void> task = new SCAsyncTask<String, Void, Void>((SherlockFragmentActivity) context,
+				SCAsyncTask<Object, Void, Boolean> task = new SCAsyncTask<Object,Void , Boolean>((SherlockFragmentActivity) context,
 						new MonitorMyItineraryProcessor((SherlockFragmentActivity) context));
-				task.execute(Boolean.toString(isChecked), myItineraries.get(position).getClientId());
+				task.execute(Boolean.toString(!isChecked), myItineraries,position);
 			}
 		});
 		return row;
@@ -149,26 +149,33 @@ public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 		LinearLayout transportTypes;
 	}
 	
-	public class MonitorMyItineraryProcessor extends AbstractAsyncTaskProcessor<String, Void> {
+	public class MonitorMyItineraryProcessor extends AbstractAsyncTaskProcessor<Object, Boolean> {
 
-
+		Integer position;
+		List<BasicItinerary> myItineraries;
+		String id;
+		
 		public MonitorMyItineraryProcessor(SherlockFragmentActivity activity) {
 			super(activity);
 		}
 
 		@Override
-		public Void performAction(String... strings) throws SecurityException, Exception {
+		public Boolean performAction(Object... params) throws SecurityException, Exception {
 			// 0: monitor
 			// 1: id
-			boolean monitor = Boolean.parseBoolean(strings[0]);
-			String id = strings[1];
-			JPHelper.monitorMyItinerary(monitor, id);
-			return null;
+			boolean monitor = Boolean.parseBoolean((String) params[0]);
+			 position = (Integer) params[2];
+			 myItineraries=(List<BasicItinerary>) params[1];
+			 id =  myItineraries.get(position).getClientId();
+			return JPHelper.monitorMyItinerary(monitor, id);
 		}
 
 		@Override
-		public void handleResult(Void result) {
+		public void handleResult(Boolean result) {
 			//cambia background in funzione a quello che ho
+			myItineraries.get(position).setMonitor(result);
+			notifyDataSetChanged();
+
 		}
 	}
 }
