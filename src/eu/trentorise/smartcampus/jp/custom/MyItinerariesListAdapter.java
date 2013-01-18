@@ -23,21 +23,30 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+import eu.trentorise.smartcampus.android.common.SCAsyncTask;
 import eu.trentorise.smartcampus.jp.Config;
 import eu.trentorise.smartcampus.jp.R;
 import eu.trentorise.smartcampus.jp.custom.data.BasicItinerary;
 import eu.trentorise.smartcampus.jp.custom.draw.LineDrawView;
+import eu.trentorise.smartcampus.jp.helper.JPHelper;
 import eu.trentorise.smartcampus.jp.helper.Utils;
+import eu.trentorise.smartcampus.jp.helper.processor.MonitorMyItineraryProcessor;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 
@@ -53,7 +62,7 @@ public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		View row = convertView;
 		RowHolder holder = null;
 
@@ -62,11 +71,13 @@ public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 			row = inflater.inflate(layoutResourceId, parent, false);
 
 			holder = new RowHolder();
-			holder.name = (TextView) row.findViewById(R.id.it_name);
-			holder.timeFrom = (TextView) row.findViewById(R.id.it_time_from);
-			holder.line = (FrameLayout) row.findViewById(R.id.it_line);
-			holder.timeTo = (TextView) row.findViewById(R.id.it_time_to);
-			holder.transportTypes = (LinearLayout) row.findViewById(R.id.it_transporttypes);
+			holder.name = (TextView) row.findViewById(R.id.its_name);
+			holder.timeFrom = (TextView) row.findViewById(R.id.its_time_from);
+			holder.line = (FrameLayout) row.findViewById(R.id.its_line);
+			holder.timeTo = (TextView) row.findViewById(R.id.its_time_to);
+			holder.transportTypes = (LinearLayout) row.findViewById(R.id.its_transporttypes);
+			holder.monitor = (ToggleButton) row.findViewById(R.id.its_monitor);
+			
 
 			row.setTag(holder);
 		} else {
@@ -112,14 +123,52 @@ public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 			}
 		}
 
+		/*Set monitor on or off and clicklistener*/
+
+
+		if (myItinerary.isMonitor())
+			holder.monitor.setBackgroundResource(R.drawable.monitor_on); 
+		else holder.monitor.setBackgroundResource(R.drawable.monitor_off);
+		 holder.monitor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				SCAsyncTask<String, Void, Void> task = new SCAsyncTask<String, Void, Void>((SherlockFragmentActivity) context,
+						new MonitorMyItineraryProcessor((SherlockFragmentActivity) context));
+				task.execute(Boolean.toString(isChecked), myItineraries.get(position).getClientId());
+			}
+		});
 		return row;
 	}
 
 	static class RowHolder {
 		TextView name;
 		TextView timeFrom;
+		ToggleButton monitor;
 		FrameLayout line;
 		TextView timeTo;
 		LinearLayout transportTypes;
+	}
+	
+	public class MonitorMyItineraryProcessor extends AbstractAsyncTaskProcessor<String, Void> {
+
+
+		public MonitorMyItineraryProcessor(SherlockFragmentActivity activity) {
+			super(activity);
+		}
+
+		@Override
+		public Void performAction(String... strings) throws SecurityException, Exception {
+			// 0: monitor
+			// 1: id
+			boolean monitor = Boolean.parseBoolean(strings[0]);
+			String id = strings[1];
+			JPHelper.monitorMyItinerary(monitor, id);
+			return null;
+		}
+
+		@Override
+		public void handleResult(Void result) {
+			//cambia background in funzione a quello che ho
+		}
 	}
 }

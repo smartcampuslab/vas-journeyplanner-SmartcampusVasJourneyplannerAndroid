@@ -32,14 +32,19 @@
     <string name="tab_profile">Preferences</string>
     <string name="tab_favorites">Favorites</string>
     <string name="dialog_itineraryname_hint">Itinerary name</string>
+    <string name="plan_location">Location</string>
+    <string name="plan_datetime">Date/Time</string>
+    <string name="plan_preferences">Preferences</string>
+    <string name="plan_timing">Timing</string>   
+    <string name="plan_schedule">Schedule</string>
     <string name="plan_from">From&#8230;</string>
     <string name="plan_to">To&#8230;</string>
     <string name="plan_date">Date</string>
     <string name="plan_time">Time</string>
     <string name="plan_search">Search</string>
     <string name="plan_custom_prefs">Customize preferences?</string>
-    <string name="plan_custom_prefs_off">No</string>
-    <string name="plan_custom_prefs_on">Yes</string>
+    <string name="plan_custom_prefs_off">Hide</string>
+    <string name="plan_custom_prefs_on">Show</string>
     <string name="monitor_off">Monitor OFF</string>
     <string name="monitor_on">Monitor ON</string>
     <string name="spinner_routes">Select a route</string>
@@ -117,4 +122,9 @@
     <string name="title_plan_single">Plan journey</string>
     <string name="title_plan_recur">Recurrent journeys</string>
     <string name="title_prefs">Manage preferences</string>
+    
+    <string name="menu_item_delete">Delete</string>
+    <string name="menu_item_monitor_on">Monitor on</string>
+    <string name="menu_item_monitor_off">Monitor off</string>
+    
 </resources>

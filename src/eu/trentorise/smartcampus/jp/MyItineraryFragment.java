@@ -26,6 +26,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,10 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 
 import eu.trentorise.smartcampus.android.common.SCAsyncTask;
 import eu.trentorise.smartcampus.jp.custom.LegsListAdapter;
@@ -61,6 +66,8 @@ public class MyItineraryFragment extends SherlockFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+
 	}
 
 	@Override
@@ -68,6 +75,34 @@ public class MyItineraryFragment extends SherlockFragment {
 		return inflater.inflate(R.layout.myitinerary, container, false);
 	}
 
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+ 
+			menu.clear();
+			getSherlockActivity().getSupportMenuInflater().inflate(R.menu.gripmenu, menu);
+			SubMenu submenu = menu.getItem(0).getSubMenu();
+			submenu.clear();
+
+			submenu.add(Menu.CATEGORY_SYSTEM, R.id.menu_item_delete, Menu.NONE,
+					R.string.menu_item_delete);
+			if (myItinerary!=null)
+			{
+			if (myItinerary.isMonitor())
+				submenu.add(Menu.CATEGORY_SYSTEM, R.id.menu_item_monitor, Menu.NONE,R.string.menu_item_monitor_off);
+			else submenu.add(Menu.CATEGORY_SYSTEM, R.id.menu_item_monitor, Menu.NONE,R.string.menu_item_monitor_off);
+			}
+
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return super.onOptionsItemSelected(item);
+	}
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -146,7 +181,11 @@ public class MyItineraryFragment extends SherlockFragment {
 		});
 
 		final ToggleButton monitorToggleBtn = (ToggleButton) getView().findViewById(R.id.myitinerary_toggle);
-		monitorToggleBtn.setChecked(myItinerary.isMonitor());
+		//monitorToggleBtn.setChecked(myItinerary.isMonitor());
+		if (myItinerary.isMonitor())
+			monitorToggleBtn.setBackgroundResource(R.drawable.monitor_on); 
+		else monitorToggleBtn.setBackgroundResource(R.drawable.monitor_off);
+		
 		monitorToggleBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

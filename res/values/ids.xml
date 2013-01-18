@@ -18,5 +18,7 @@
 
     <!-- id's which will be in R.id and you'll use later -->
     <item name="mygroups_add" type="id"/>
-
+    <item name="menu_item_delete" type="id"/>
+    <item name="menu_item_monitor" type="id"/>
+    
 </resources>

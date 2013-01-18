@@ -35,6 +35,7 @@
             android:gravity="top"
             android:padding="10dp" 
             android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/name_ll"
                 android:layout_width="match_parent"
@@ -57,12 +58,21 @@
                     android:text="@string/recur_monitor" />
                 
             </LinearLayout>    
-            
+            <TextView
+                    android:id="@+id/plannew_location_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plan_location" 
+                    style="@style/label_jp"
+                    />
+
             <LinearLayout
                 android:id="@+id/plannew_from_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                    android:paddingTop="10dp" 
+                android:gravity="bottom"
                 android:orientation="horizontal" >
 
                 <AutoCompleteTextView
@@ -97,19 +107,15 @@
 
                 <ImageButton
                     android:id="@+id/plannew_from_opt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@android:color/transparent"
+                        android:layout_width="41dp"
+                        android:layout_height="41dp"  
                     android:contentDescription="@string/plan_from"
                     android:src="@drawable/ic_position" />
 
                 <ImageButton
                     android:id="@+id/plannew_from_star"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@android:color/transparent"
+                        android:layout_width="41dp"
+                        android:layout_height="41dp"  
                     android:contentDescription="@string/plan_from"
                     android:src="@drawable/ic_star" />
             </LinearLayout>
@@ -119,7 +125,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:focusableInTouchMode="false" >
+                    android:paddingTop="10dp" 
+                android:focusableInTouchMode="false"
+                android:gravity="bottom" >
 
                 <AutoCompleteTextView
                     android:textColor="@android:color/primary_text_light"
@@ -163,27 +171,34 @@
 
                  <ImageButton
                     android:id="@+id/plannew_to_opt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                        android:layout_width="41dp"
+                        android:layout_height="41dp"  
                     android:layout_gravity="center_vertical"
-                    android:background="@android:color/transparent"
                     android:contentDescription="@string/plan_from"
                     android:src="@drawable/ic_position" />
 
                  <ImageButton
                     android:id="@+id/plannew_to_star"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                        android:layout_width="41dp"
+                        android:layout_height="41dp"  
                     android:layout_gravity="center_vertical"
-                    android:background="@android:color/transparent"
                     android:contentDescription="@string/plan_to"
                     android:src="@drawable/ic_star" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/TextView01"
+                style="@style/label_jp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                    android:paddingTop="10dp" 
+                android:text="@string/plan_timing" />
 
             <LinearLayout
                 android:id="@+id/plannew_when_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="10dp"
                 android:layout_marginBottom="10dp" >
 
                 <EditText
@@ -211,6 +226,7 @@
                 android:id="@+id/plannew_when_date_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="10dp"
                 android:layout_marginBottom="10dp" >
 
                 <EditText
@@ -233,11 +249,20 @@
                     android:hint="@string/recur_date_to"
                     android:inputType="time" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/plannew_schedule_label"
+                style="@style/label_jp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/plan_schedule" />
             
             <Spinner
                 android:id="@+id/recurrence"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="10dp"
                 android:layout_marginBottom="10dp" />
                 
             

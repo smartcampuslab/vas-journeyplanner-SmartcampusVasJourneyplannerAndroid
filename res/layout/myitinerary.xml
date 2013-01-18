@@ -34,19 +34,40 @@
         android:layout_height="wrap_content"
         android:padding="10dp" >
 
+        <ToggleButton
+            android:id="@+id/myitinerary_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/monitor_off"
+            android:textOn=""
+            android:textOff="" 
+            android:focusable="false" />
+
         <TextView
             android:id="@+id/myitinerary_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true" />
+            android:layout_below="@+id/myitinerary_toggle" />
 
         <TextView
             android:id="@+id/myitinerary_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true" />
+            android:layout_below="@+id/myitinerary_toggle" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/myitinerary_toggle"
+            android:layout_alignBottom="@+id/myitinerary_toggle"
+            android:layout_toRightOf="@+id/myitinerary_toggle"
+            style="@style/label_jp"         
+            android:text="@string/monitor_on" />
+
     </RelativeLayout>
 
     <ListView
@@ -70,16 +91,6 @@
             android:text="@string/btn_delete" />
 
         <!-- android:layout_gravity="center_vertical" -->
-
-        <ToggleButton
-            android:id="@+id/myitinerary_toggle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:checked="true"
-            android:textOff="@string/monitor_off"
-            android:textOn="@string/monitor_on" />
     </LinearLayout>
 
 </LinearLayout>
