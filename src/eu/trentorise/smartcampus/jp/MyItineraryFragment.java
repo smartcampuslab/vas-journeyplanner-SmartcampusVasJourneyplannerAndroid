@@ -39,16 +39,20 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 
 import eu.trentorise.smartcampus.android.common.SCAsyncTask;
+import eu.trentorise.smartcampus.jp.custom.AbstractAsyncTaskProcessor;
 import eu.trentorise.smartcampus.jp.custom.LegsListAdapter;
 import eu.trentorise.smartcampus.jp.custom.data.BasicItinerary;
+import eu.trentorise.smartcampus.jp.helper.JPHelper;
 import eu.trentorise.smartcampus.jp.helper.processor.DeleteMyItineraryProcessor;
 import eu.trentorise.smartcampus.jp.helper.processor.MonitorMyItineraryProcessor;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class MyItineraryFragment extends SherlockFragment {
 
@@ -89,7 +93,7 @@ public class MyItineraryFragment extends SherlockFragment {
 			{
 			if (myItinerary.isMonitor())
 				submenu.add(Menu.CATEGORY_SYSTEM, R.id.menu_item_monitor, Menu.NONE,R.string.menu_item_monitor_off);
-			else submenu.add(Menu.CATEGORY_SYSTEM, R.id.menu_item_monitor, Menu.NONE,R.string.menu_item_monitor_off);
+			else submenu.add(Menu.CATEGORY_SYSTEM, R.id.menu_item_monitor, Menu.NONE,R.string.menu_item_monitor_on);
 			}
 
 	}
@@ -99,10 +103,43 @@ public class MyItineraryFragment extends SherlockFragment {
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		return super.onOptionsItemSelected(item);
-	}
+		switch (item.getItemId()) {
+		case R.id.menu_item_monitor:
+			//toggle the monitor
+					SCAsyncTask<String, Void, Boolean> task = new SCAsyncTask<String, Void, Boolean>(getSherlockActivity(),
+							new MonitorMyItineraryProcessor(getSherlockActivity()));
+					task.execute(Boolean.toString(!myItinerary.isMonitor()), myItinerary.getClientId());
+				
+			
+			return true;
+		case R.id.menu_item_delete:
+			//delete monitor
+			AlertDialog.Builder deleteAlertDialog = new AlertDialog.Builder(getSherlockActivity());
+			deleteAlertDialog.setTitle("Delete " + myItinerary.getName());
+			deleteAlertDialog.setMessage("Are you sure?");
+			deleteAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					SCAsyncTask<String, Void, Void> task = new SCAsyncTask<String, Void, Void>(getSherlockActivity(),
+							new DeleteMyItineraryProcessor(getSherlockActivity()));
+					task.execute(myItinerary.getName(), myItinerary.getClientId());
+					dialog.dismiss();
+					getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
+				}
+			});
+			deleteAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+			deleteAlertDialog.show();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+			}
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -155,45 +192,97 @@ public class MyItineraryFragment extends SherlockFragment {
 			}
 		});
 
-		Button deleteMyItineraryBtn = (Button) getView().findViewById(R.id.myitinerary_delete);
-		deleteMyItineraryBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				AlertDialog.Builder deleteAlertDialog = new AlertDialog.Builder(getSherlockActivity());
-				deleteAlertDialog.setTitle("Delete " + myItinerary.getName());
-				deleteAlertDialog.setMessage("Are you sure?");
-				deleteAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						SCAsyncTask<String, Void, Void> task = new SCAsyncTask<String, Void, Void>(getSherlockActivity(),
-								new DeleteMyItineraryProcessor(getSherlockActivity()));
-						task.execute(myItinerary.getName(), myItinerary.getClientId());
-						dialog.dismiss();
-						getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
-					}
-				});
-				deleteAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
-				deleteAlertDialog.show();
-			}
-		});
+//		Button deleteMyItineraryBtn = (Button) getView().findViewById(R.id.myitinerary_delete);
+//		deleteMyItineraryBtn.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				AlertDialog.Builder deleteAlertDialog = new AlertDialog.Builder(getSherlockActivity());
+//				deleteAlertDialog.setTitle("Delete " + myItinerary.getName());
+//				deleteAlertDialog.setMessage("Are you sure?");
+//				deleteAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int which) {
+//						SCAsyncTask<String, Void, Void> task = new SCAsyncTask<String, Void, Void>(getSherlockActivity(),
+//								new DeleteMyItineraryProcessor(getSherlockActivity()));
+//						task.execute(myItinerary.getName(), myItinerary.getClientId());
+//						dialog.dismiss();
+//						getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
+//					}
+//				});
+//				deleteAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int which) {
+//						dialog.dismiss();
+//					}
+//				});
+//				deleteAlertDialog.show();
+//			}
+//		});
 
-		final ToggleButton monitorToggleBtn = (ToggleButton) getView().findViewById(R.id.myitinerary_toggle);
+		ToggleButton monitorToggleBtn = (ToggleButton) getView().findViewById(R.id.myitinerary_toggle);
+		TextView monitorLabel= (TextView) getView().findViewById(R.id.myitinerary_monitor_label);
+
 		//monitorToggleBtn.setChecked(myItinerary.isMonitor());
-		if (myItinerary.isMonitor())
-			monitorToggleBtn.setBackgroundResource(R.drawable.monitor_on); 
-		else monitorToggleBtn.setBackgroundResource(R.drawable.monitor_off);
+
+		monitorToggleBtn.setOnCheckedChangeListener(null);
+		monitorToggleBtn.setChecked(myItinerary.isMonitor());
+
+		if (myItinerary.isMonitor()){
+			monitorToggleBtn.setBackgroundResource(R.drawable.ic_monitor_on);
+			monitorLabel.setText(getString(R.string.monitor_on));
+
+			}
+		else 
+			{
+			monitorToggleBtn.setBackgroundResource(R.drawable.ic_monitor_off);
+			monitorLabel.setText(getString(R.string.monitor_off));
+
+			}
+		
 		
 		monitorToggleBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				SCAsyncTask<String, Void, Void> task = new SCAsyncTask<String, Void, Void>(getSherlockActivity(),
+				SCAsyncTask<String, Void, Boolean> task = new SCAsyncTask<String, Void, Boolean>(getSherlockActivity(),
 						new MonitorMyItineraryProcessor(getSherlockActivity()));
 				task.execute(Boolean.toString(isChecked), myItinerary.getClientId());
 			}
 		});
+	}
+	
+	public class MonitorMyItineraryProcessor extends AbstractAsyncTaskProcessor<String, Boolean> {
+		ToggleButton monitorToggleBtn;
+		TextView monitorLabel;
+		public MonitorMyItineraryProcessor(SherlockFragmentActivity activity) {
+			super(activity);
+			monitorToggleBtn= (ToggleButton) activity.findViewById(R.id.myitinerary_toggle);
+			monitorLabel= (TextView) activity.findViewById(R.id.myitinerary_monitor_label);
+		}
+
+		@Override
+		public Boolean performAction(String... strings) throws SecurityException, Exception {
+			// 0: monitor
+			// 1: id
+			boolean monitor = Boolean.parseBoolean(strings[0]);
+			String id = strings[1];
+			return JPHelper.monitorMyItinerary(monitor, id);
+		}
+
+		@Override
+		public void handleResult(Boolean result) {
+			myItinerary.setMonitor(result);
+			if (result)
+				{
+				monitorToggleBtn.setBackgroundResource(R.drawable.ic_monitor_on);
+				monitorLabel.setText(getString(R.string.monitor_on));
+				}
+			else 
+				{
+				monitorToggleBtn.setBackgroundResource(R.drawable.ic_monitor_off);
+				monitorLabel.setText(getString(R.string.monitor_off));
+				}
+			getSherlockActivity().invalidateOptionsMenu();
+
+		}
+
 	}
 
 }

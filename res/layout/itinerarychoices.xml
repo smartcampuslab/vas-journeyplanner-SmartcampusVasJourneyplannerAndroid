@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -67,6 +68,25 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/black" />
         </LinearLayout>
+        <LinearLayout 
+            android:id="@+id/no_items_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             android:visibility="gone"         
+            android:orientation="vertical" >
+        <View
+        android:layout_width="fill_parent"
+		android:layout_height="2dip"
+		
+		android:background="@color/sc_light_gray" />
+        <TextView
+            android:text="@string/no_items"
+            style="@style/no_items"/>
+        </LinearLayout>
+
+
+
+
     </LinearLayout>
 
     <ListView

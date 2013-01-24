@@ -42,6 +42,7 @@
     <string name="plan_date">Date</string>
     <string name="plan_time">Time</string>
     <string name="plan_search">Search</string>
+    <string name="no_items">No items found</string>
     <string name="plan_custom_prefs">Customize preferences?</string>
     <string name="plan_custom_prefs_off">Hide</string>
     <string name="plan_custom_prefs_on">Show</string>
@@ -126,5 +127,6 @@
     <string name="menu_item_delete">Delete</string>
     <string name="menu_item_monitor_on">Monitor on</string>
     <string name="menu_item_monitor_off">Monitor off</string>
+    <string name="always">Always</string>
     
 </resources>

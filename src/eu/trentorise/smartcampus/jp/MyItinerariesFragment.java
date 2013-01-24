@@ -27,15 +27,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import eu.trentorise.smartcampus.android.common.SCAsyncTask;
+import eu.trentorise.smartcampus.jp.custom.AbstractAsyncTaskProcessor;
 import eu.trentorise.smartcampus.jp.custom.MyItinerariesListAdapter;
 import eu.trentorise.smartcampus.jp.custom.data.BasicItinerary;
+import eu.trentorise.smartcampus.jp.helper.JPHelper;
 import eu.trentorise.smartcampus.jp.helper.processor.GetMyItinerariesProcessor;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class MyItinerariesFragment extends SherlockFragment {
 
@@ -59,7 +65,15 @@ public class MyItinerariesFragment extends SherlockFragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-
+		TextView noitems = (TextView) getView().findViewById(R.id.myitinearies_noitems_label);
+//		if ((myItineraries==null)||(myItineraries.size()==0))
+//			{
+//			//put "empty string"
+//			noitems.setVisibility(View.VISIBLE);
+//			}
+//		else {
+			noitems.setVisibility(View.GONE);
+//		}
 		ListView myJourneysList = (ListView) getView().findViewById(R.id.myitineraries_list);
 		adapter = new MyItinerariesListAdapter(getSherlockActivity(),
 				R.layout.itinerarychoicessaved_row, myItineraries);
@@ -85,6 +99,42 @@ public class MyItinerariesFragment extends SherlockFragment {
 		InputMethodManager imm = (InputMethodManager)getSherlockActivity().getSystemService(
 			      Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(getSherlockActivity().getWindow().getDecorView().findViewById(android.R.id.content).getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+	}
+	
+	public class GetMyItinerariesProcessor extends AbstractAsyncTaskProcessor<Void, List<BasicItinerary>> {
+
+		private MyItinerariesListAdapter adapter;
+		private TextView noitems;
+		public GetMyItinerariesProcessor(SherlockFragmentActivity activity, MyItinerariesListAdapter adapter) {
+			super(activity);
+			this.adapter = adapter;
+			noitems = (TextView) activity.findViewById(R.id.myitinearies_noitems_label);
+
+		}
+
+		@Override
+		public List<BasicItinerary> performAction(Void... params) throws SecurityException, Exception {
+			return JPHelper.getMyItineraries();
+		}
+
+		@Override
+		public void handleResult(List<BasicItinerary> result) {
+			// if (!result.isEmpty()) {
+			adapter.clear();
+			for (BasicItinerary myt : result) {
+				adapter.add(myt);
+			}
+			adapter.notifyDataSetChanged();
+			if ((result==null)||(result.size()==0))
+			{
+			//put "empty string"
+			noitems.setVisibility(View.VISIBLE);
+			}
+		else {
+			noitems.setVisibility(View.GONE);
+		}
+			// }
+		}
 	}
 
 }

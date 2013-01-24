@@ -50,14 +50,37 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="@string/recur_name"/>
+                
+            </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/recur_monitor"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <ToggleButton
+                    android:id="@+id/myitinerary_toggle"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/monitor_off"
+                    android:focusable="false"
+                    android:textOn=""
+                    android:textOff="" />
+
+                <TextView
+                    android:id="@+id/myitinerary_monitor_label"
+                    style="@style/label_jp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/recur_monitor" />
-                
-            </LinearLayout>    
+                    android:text="@string/monitor_on" />
+
+            </LinearLayout>
+
+<!--             <CheckBox -->
+<!--                 android:id="@+id/recur_monitor" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:text="@string/recur_monitor" /> -->
+    
             <TextView
                     android:id="@+id/plannew_location_label"
                     android:layout_width="wrap_content"
@@ -248,6 +271,13 @@
                     android:focusableInTouchMode="false"
                     android:hint="@string/recur_date_to"
                     android:inputType="time" />
+
+                <CheckBox
+                    android:id="@+id/always_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/always" />
+
             </LinearLayout>
 
             <TextView
@@ -318,12 +348,12 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="@string/recurr_save" />
-        <Button
-        android:id="@+id/recurr_delete"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="@string/recurr_delete" />
+<!--         <Button -->
+<!--         android:id="@+id/recurr_delete" -->
+<!--         android:layout_width="0dp" -->
+<!--         android:layout_weight="1" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:text="@string/recurr_delete" /> -->
         
     </LinearLayout>
     <!-- android:layout_alignParentBottom="true" -->

@@ -175,6 +175,23 @@ public class JPHelper {
 		return monitor;
 
 	}
+	
+	
+	public static boolean monitorMyRecItinerary(boolean monitor, String id) throws ConnectionException, ProtocolException,
+	SecurityException {
+//		if (id != null && id.length() > 0) {
+//	MessageRequest req = new MessageRequest(GlobalConfig.getAppUrl(instance.mContext), Config.TARGET_ADDRESS + Config.CALL_MONITOR
+//			+ "/" + id + "/" + Boolean.toString(monitor));
+//	req.setMethod(Method.POST);
+//	req.setBody("");
+//
+//	MessageResponse res = JPHelper.instance.getProtocolCarrier().invokeSync(req, Config.APP_TOKEN, getAuthToken());
+//	
+//}
+//se cambiato restituisce il valore del monitor
+return monitor;
+
+}
 
 	/*
 	 * BUS
@@ -405,4 +422,6 @@ public class JPHelper {
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 		}
 	}
+
+
 }

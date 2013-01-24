@@ -19,7 +19,11 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical" >
-
+   <TextView
+       android:id="@+id/myitinearies_noitems_label"
+            android:text="@string/no_items"
+            android:visibility="gone"
+            style="@style/no_items"/>
     <ListView
         android:id="@+id/myitineraries_list"
         android:layout_width="match_parent"

@@ -28,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -98,6 +99,15 @@ public class ItineraryChoicesFragment extends SherlockFragment {
 		toTextView.setText(singleJourney.getTo().getName());
 
 		ListView choicesList = (ListView) getView().findViewById(R.id.choices_listView);
+		LinearLayout noitems = (LinearLayout) getView().findViewById(R.id.no_items_label);
+		if ((itineraries==null)||(itineraries.size()==0))
+			{
+			//put "empty string"
+			noitems.setVisibility(View.VISIBLE);
+			}
+		else {
+			noitems.setVisibility(View.GONE);
+		}
 		adapter = new ItinerariesListAdapter(getSherlockActivity(), R.layout.itinerarychoices_row, itineraries);
 		choicesList.setAdapter(adapter);
 

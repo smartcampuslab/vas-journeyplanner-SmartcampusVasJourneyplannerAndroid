@@ -125,16 +125,24 @@ public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 
 		/*Set monitor on or off and clicklistener*/
 
-
+		holder.monitor.setOnCheckedChangeListener(null);
+		holder.monitor.setChecked(myItinerary.isMonitor());
 		if (myItinerary.isMonitor())
-			holder.monitor.setBackgroundResource(R.drawable.monitor_on); 
-		else holder.monitor.setBackgroundResource(R.drawable.monitor_off);
+			holder.monitor.setBackgroundResource(R.drawable.ic_monitor_on); 
+		else holder.monitor.setBackgroundResource(R.drawable.ic_monitor_off);
 		 holder.monitor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				SCAsyncTask<Object, Void, Boolean> task = new SCAsyncTask<Object,Void , Boolean>((SherlockFragmentActivity) context,
+				
+				switch(buttonView.getId()) {
+	            case R.id.its_monitor:
+	            	SCAsyncTask<Object, Void, Boolean> task = new SCAsyncTask<Object,Void , Boolean>((SherlockFragmentActivity) context,
 						new MonitorMyItineraryProcessor((SherlockFragmentActivity) context));
-				task.execute(Boolean.toString(!isChecked), myItineraries,position);
+	            	task.execute(Boolean.toString(isChecked), myItineraries,position);
+				break;
+				default:
+					return;
+				}
 			}
 		});
 		return row;
