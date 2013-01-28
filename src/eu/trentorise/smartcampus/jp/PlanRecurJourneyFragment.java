@@ -20,6 +20,8 @@ import it.sayservice.platform.smartplanner.data.message.journey.JourneyRecurrenc
 import it.sayservice.platform.smartplanner.data.message.journey.RecurrentJourneyParameters;
 
 import java.text.ParseException;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -65,6 +67,7 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 
 	private static final String[] RECURRENCE = new String[] { "Daily", "Weekdays", "Weekends" };
 
+	private static final ArrayList<CheckBox> days = new ArrayList<CheckBox>();
 	public static final String PARAMS = "parameters";
 
 	private static final int intervalhour = 2;
@@ -122,7 +125,6 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		if (savedInstanceState != null && savedInstanceState.containsKey(PARAMS)) {
 			this.params = (BasicRecurrentJourneyParameters) savedInstanceState.getSerializable(PARAMS);
 		} else if (getArguments() != null && getArguments().containsKey(PARAMS)) {
@@ -373,11 +375,29 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 
 				rj.setRecurrence(mapRecurrence(((Spinner) getView().findViewById(R.id.recurrence)).getSelectedItemPosition()));
 
+				 days.clear();
+				 CheckBox mondayCheckBox = (CheckBox) getView().findViewById(R.id.monday_checkbox);
+				 days.add(mondayCheckBox);
+				 CheckBox tuersdayCheckBox = (CheckBox) getView().findViewById(R.id.tuersday_checkbox);
+				 days.add(tuersdayCheckBox);
+				 CheckBox wednesdayCheckBox = (CheckBox) getView().findViewById(R.id.wednesday_checkbox);
+				 days.add(wednesdayCheckBox);
+				 CheckBox thursdayCheckBox = (CheckBox) getView().findViewById(R.id.thursday_checkbox);
+				 days.add(thursdayCheckBox);
+				 CheckBox fridayCheckBox = (CheckBox) getView().findViewById(R.id.friday_checkbox);
+				 days.add(fridayCheckBox);
+				 CheckBox saturdayCheckBox = (CheckBox) getView().findViewById(R.id.saturday_checkbox);
+				 days.add(saturdayCheckBox);
+				 CheckBox sundayCheckBox = (CheckBox) getView().findViewById(R.id.sunday_checkbox);
+				days.add(sundayCheckBox);
+				// rj.setDays(days);
+				
 				SCAsyncTask<BasicRecurrentJourneyParameters, Void, Boolean> task = new SCAsyncTask<BasicRecurrentJourneyParameters, Void, Boolean>(
 						getSherlockActivity(), new SaveRecurJourneyProcessor(getSherlockActivity()));
 				task.execute(params);
 			}
 		});
+
 		//add listener on alwayscheck
 		CheckBox alwaysCheckbox = (CheckBox) getView().findViewById(R.id.always_checkbox);
 		alwaysCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {

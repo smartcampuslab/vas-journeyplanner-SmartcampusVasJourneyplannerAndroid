@@ -53,6 +53,7 @@
                 
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
@@ -61,7 +62,7 @@
                     android:id="@+id/myitinerary_toggle"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/monitor_off"
+                    android:background="@drawable/ic_monitor_off"
                     android:focusable="false"
                     android:textOn=""
                     android:textOff="" />
@@ -234,6 +235,14 @@
                     android:hint="@string/recur_time_from"
                     android:inputType="time" />
 
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/separator" />
+
                 <EditText
                     android:id="@+id/recur_time_to"
                     android:layout_width="wrap_content"
@@ -261,6 +270,14 @@
                     android:focusableInTouchMode="false"
                     android:hint="@string/recur_date_from"
                     android:inputType="date" />
+
+                <TextView
+                    android:id="@+id/TextView03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/separator" />
 
                 <EditText
                     android:id="@+id/recur_date_to"
@@ -302,6 +319,55 @@
             <!-- android:layout_height="wrap_content" -->
             <!-- android:layout_below="@id/plannew_when_ll" -->
             <!-- android:layout_marginBottom="10dp" /> -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+                
+                <CheckBox
+                    android:id="@+id/monday_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/monday" />
+
+                <CheckBox
+                    android:id="@+id/tuersday_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tuersday" />
+
+                <CheckBox
+                    android:id="@+id/wednesday_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wednesday" />
+
+                <CheckBox
+                    android:id="@+id/thursday_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/thursday" />
+
+                <CheckBox
+                    android:id="@+id/friday_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/friday" />
+
+                <CheckBox
+                    android:id="@+id/saturday_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/saturday" />
+
+                <CheckBox
+                    android:id="@+id/sunday_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sunday" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/plannew_options"

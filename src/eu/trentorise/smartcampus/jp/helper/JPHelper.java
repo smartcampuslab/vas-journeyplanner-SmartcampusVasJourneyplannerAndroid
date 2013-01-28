@@ -160,6 +160,7 @@ public class JPHelper {
 		}
 	}
 
+
 	public static boolean monitorMyItinerary(boolean monitor, String id) throws ConnectionException, ProtocolException,
 			SecurityException {
 		if (id != null && id.length() > 0) {

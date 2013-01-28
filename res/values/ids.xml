@@ -14,11 +14,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- id's which will be in R.id and you'll use later -->
     <item name="mygroups_add" type="id"/>
     <item name="menu_item_delete" type="id"/>
     <item name="menu_item_monitor" type="id"/>
-    
 </resources>

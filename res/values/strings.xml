@@ -123,10 +123,22 @@
     <string name="title_plan_single">Plan journey</string>
     <string name="title_plan_recur">Recurrent journeys</string>
     <string name="title_prefs">Manage preferences</string>
-    
+   
     <string name="menu_item_delete">Delete</string>
     <string name="menu_item_monitor_on">Monitor on</string>
     <string name="menu_item_monitor_off">Monitor off</string>
     <string name="always">Always</string>
-    
+    <string name="separator">-</string>
+    <string name="plan_schedule">Schedule</string>
+	<string name="plan_timing">Timing</string>
+	<string name="plan_location">Location</string>
+<!--     days of the week -->
+        <string name="monday">Monday</string>
+        <string name="tuersday">Tuersday</string>
+        <string name="wednesday">Wednesday</string>
+        <string name="thursday">Thursday</string>
+        <string name="friday">Friday</string>
+        <string name="saturday">Saturday</string>
+        <string name="sunday">Sunday</string>
+
 </resources>

@@ -108,13 +108,14 @@
     
     </LinearLayout>
 
+
 <ToggleButton
     android:id="@+id/its_monitor"
     android:layout_width="30dp"
     android:layout_height="30dp"
     android:layout_marginRight="20dp"
     android:layout_weight="0"
-    android:background="@drawable/monitor_off"
+    android:background="@drawable/ic_monitor_off"
     android:textOn=""
     android:textOff=""
     android:focusable="false" />

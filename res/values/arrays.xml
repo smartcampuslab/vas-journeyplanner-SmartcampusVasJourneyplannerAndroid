@@ -25,5 +25,15 @@
         <item>Traffic jam</item>
         <item>Diversion</item>
     </string-array>
+    
+<!--     <string-array name="days"> -->
+<!--         <item>Monday</item> -->
+<!--         <item>Tuersday</item> -->
+<!--         <item>Wednesday</item> -->
+<!--         <item>Thursday</item> -->
+<!--         <item>Friday</item> -->
+<!--         <item>Saturday</item> -->
+<!--         <item>Sunday</item> -->
+<!--     </string-array> -->
 
 </resources>
