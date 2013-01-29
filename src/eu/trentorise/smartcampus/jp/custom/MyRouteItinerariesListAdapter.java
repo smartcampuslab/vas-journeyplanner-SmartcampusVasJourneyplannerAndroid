@@ -41,6 +41,8 @@ import android.widget.ToggleButton;
 import eu.trentorise.smartcampus.android.common.SCAsyncTask;
 import eu.trentorise.smartcampus.jp.Config;
 import eu.trentorise.smartcampus.jp.R;
+import eu.trentorise.smartcampus.jp.R.drawable;
+import eu.trentorise.smartcampus.jp.R.id;
 import eu.trentorise.smartcampus.jp.custom.data.BasicItinerary;
 import eu.trentorise.smartcampus.jp.custom.draw.LineDrawView;
 import eu.trentorise.smartcampus.jp.helper.JPHelper;
@@ -48,13 +50,13 @@ import eu.trentorise.smartcampus.jp.helper.Utils;
 import eu.trentorise.smartcampus.jp.helper.processor.MonitorMyItineraryProcessor;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
+public class MyRouteItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 
 	Context context;
 	int layoutResourceId;
 	List<BasicItinerary> myItineraries;
 
-	public MyItinerariesListAdapter(Context context, int layoutResourceId, List<BasicItinerary> myItineraries) {
+	public MyRouteItinerariesListAdapter(Context context, int layoutResourceId, List<BasicItinerary> myItineraries) {
 		super(context, layoutResourceId, myItineraries);
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
@@ -101,14 +103,14 @@ public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 		Date timeFrom = new Date(itinerary.getStartime());
 		String timeFromString = Config.FORMAT_TIME_UI.format(timeFrom);
 //		holder.timeFrom.setText(timeFromString);
-		holder.locationFrom.setText(myItinerary.getOriginalFrom().getName());
+		holder.locationFrom.setText(itinerary.getFrom().getName());
 		
 
 		// time to
 		Date timeTo = new Date(itinerary.getEndtime());
 		String timeToString = Config.FORMAT_TIME_UI.format(timeTo);
 //		holder.timeTo.setText(timeToString);
-		holder.locationTo.setText(myItinerary.getOriginalTo().getName());
+		holder.locationTo.setText(itinerary.getTo().getName());
 
 
 		// line between times
