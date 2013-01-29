@@ -429,12 +429,14 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 		if (params.isMonitor()){
 			monitorToggleBtn.setBackgroundResource(R.drawable.ic_monitor_on);
 			monitorLabel.setText(getString(R.string.monitor_on));
+			monitorLabel.setTextAppearance(getSherlockActivity(), R.style.label_jp);
 
 			}
 		else 
 			{
 			monitorToggleBtn.setBackgroundResource(R.drawable.ic_monitor_off);
 			monitorLabel.setText(getString(R.string.monitor_off));
+			monitorLabel.setTextAppearance(getSherlockActivity(), R.style.label_black_jp);
 
 			}
 		
@@ -547,11 +549,14 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 				{
 				monitorToggleBtn.setBackgroundResource(R.drawable.ic_monitor_on);
 				monitorLabel.setText(getString(R.string.monitor_on));
+				monitorLabel.setTextAppearance(getSherlockActivity(), R.style.label_jp);
+
 				}
 			else 
 				{
 				monitorToggleBtn.setBackgroundResource(R.drawable.ic_monitor_off);
 				monitorLabel.setText(getString(R.string.monitor_off));
+				monitorLabel.setTextAppearance(getSherlockActivity(), R.style.label_black_jp);
 				}
 			getSherlockActivity().invalidateOptionsMenu();
 

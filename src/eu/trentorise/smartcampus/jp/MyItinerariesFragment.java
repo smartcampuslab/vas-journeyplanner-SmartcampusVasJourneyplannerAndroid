@@ -76,7 +76,7 @@ public class MyItinerariesFragment extends SherlockFragment {
 //		}
 		ListView myJourneysList = (ListView) getView().findViewById(R.id.myitineraries_list);
 		adapter = new MyItinerariesListAdapter(getSherlockActivity(),
-				R.layout.itinerarychoicessaved_row, myItineraries);
+				R.layout.itinerarychoicessaved_row, myItineraries );
 		myJourneysList.setAdapter(adapter);
 
 		SCAsyncTask<Void, Void, List<BasicItinerary>> task = new SCAsyncTask<Void, Void, List<BasicItinerary>>(
