@@ -36,7 +36,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/its_monitor" >
 
             <LinearLayout
                 android:id="@+id/its_timing"
@@ -96,6 +97,7 @@
             android:id="@+id/its_monitor"
             android:layout_width="60dp"
             android:layout_height="25dp"
+            android:layout_margin="4dp"
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
