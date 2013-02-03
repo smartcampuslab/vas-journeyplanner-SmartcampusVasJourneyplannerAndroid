@@ -188,7 +188,7 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 				if (useCustomPrefsToggleBtn.isChecked()) {
 					TableLayout tTypesTableLayout = (TableLayout) userPrefsLayout.findViewById(R.id.transporttypes_table);
 					RadioGroup rTypesRadioGroup = (RadioGroup) userPrefsLayout.findViewById(R.id.routetypes_radioGroup);
-					userPrefsHolder = PrefsHelper.userPrefsViews2Holder(tTypesTableLayout, rTypesRadioGroup);
+					userPrefsHolder = PrefsHelper.userPrefsViews2Holder(tTypesTableLayout, rTypesRadioGroup, userPrefs);
 				} else {
 					userPrefsHolder = PrefsHelper.sharedPreferences2Holder(userPrefs);
 				}

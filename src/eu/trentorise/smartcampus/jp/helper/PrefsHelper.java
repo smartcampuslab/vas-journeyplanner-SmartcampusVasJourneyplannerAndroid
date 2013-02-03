@@ -100,7 +100,7 @@ public class PrefsHelper {
 			public void onClick(View v) {
 
 				UserPrefsHolder userPrefsHolder = PrefsHelper
-						.userPrefsViews2Holder(tTypesTableLayout, rTypesRadioGroup);
+						.userPrefsViews2Holder(tTypesTableLayout, rTypesRadioGroup, userPrefs);
 
 				SharedPreferences.Editor prefsEditor = userPrefs.edit();
 
@@ -142,7 +142,7 @@ public class PrefsHelper {
 		return new UserPrefsHolder(list, rType, tTypesList.toArray(new TType[] {}));
 	}
 
-	public static UserPrefsHolder userPrefsViews2Holder(TableLayout tTypesTableLayout, RadioGroup rTypesRadioGroup) {
+	public static UserPrefsHolder userPrefsViews2Holder(TableLayout tTypesTableLayout, RadioGroup rTypesRadioGroup, SharedPreferences userPrefs) {
 		// route types
 		int checkedId = rTypesRadioGroup.getCheckedRadioButtonId();
 		RadioButton rb = (RadioButton) rTypesRadioGroup.findViewById(checkedId);
@@ -160,8 +160,13 @@ public class PrefsHelper {
 				}
 			}
 		}
-
-		return new UserPrefsHolder(null, rbTType, tTypesList.toArray(new TType[] {}));
+		String addressString = userPrefs.getString(Config.USER_PREFS_FAVORITES, null);
+		List<Position> list = new ArrayList<Position>();
+		
+		if (addressString != null) {
+			list = eu.trentorise.smartcampus.android.common.Utils.convertJSONToObjects(addressString, Position.class);
+		}
+		return new UserPrefsHolder(list, rbTType, tTypesList.toArray(new TType[] {}));
 	}
 
 }
