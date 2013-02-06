@@ -25,6 +25,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,8 +71,8 @@ public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 
 			holder = new RowHolder();
 			holder.name = (TextView) row.findViewById(R.id.it_name);
-			holder.timeFrom = (TextView) row.findViewById(R.id.it_time_from);
-			holder.timeTo = (TextView) row.findViewById(R.id.it_time_to);
+//			holder.timeFrom = (TextView) row.findViewById(R.id.it_time_from);
+//			holder.timeTo = (TextView) row.findViewById(R.id.it_time_to);
 			holder.from = (TextView) row.findViewById(R.id.itlocation_from);
 			holder.to = (TextView) row.findViewById(R.id.itlocation_to);
 			holder.recurrence = (TextView) row.findViewById(R.id.recurrence);
@@ -93,20 +94,20 @@ public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 		try {
 			Date time = Config.FORMAT_TIME_SMARTPLANNER.parse(myItinerary.getData().getTime());
 			// time from
-			holder.timeFrom.setText(Config.FORMAT_TIME_UI.format(time));
+//			holder.timeFrom.setText(Config.FORMAT_TIME_UI.format(time));
 			// time to
 			time.setTime(time.getTime()+myItinerary.getData().getInterval());
-			holder.timeTo.setText(Config.FORMAT_TIME_UI.format(time));
+//			holder.timeTo.setText(Config.FORMAT_TIME_UI.format(time));
 		} catch (ParseException e) {
 		}
 		// position from
-		holder.from.setText(myItinerary.getData().getFrom().getName());
+		holder.from.setText(Html.fromHtml("<i>"+context.getString(R.string.label_from)+" </i>"+myItinerary.getData().getFrom().getName()));
 		// position to
-		holder.to.setText(myItinerary.getData().getTo().getName());
+		holder.to.setText(Html.fromHtml("<i>"+context.getString(R.string.label_to)+" </i>"+myItinerary.getData().getFrom().getName()));
 		
 		// recurrence 
-		holder.recurrence.setText(PlanRecurJourneyFragment.getRecurrenceString(myItinerary.getData().getRecurrence()));
-		
+//		holder.recurrence.setText(PlanRecurJourneyFragment.getRecurrenceString(myItinerary.getData().getRecurrence()));
+		holder.recurrence.setText(Html.fromHtml("<i>"+context.getString(R.string.label_days)+" </i>"+"Mo Tu We Th Fr Sa Su"));
 //		// transport types
 //		holder.transportTypes.removeAllViews();
 //		for (TType t : myItinerary.getData().getTransportTypes()) {
@@ -142,8 +143,8 @@ public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 
 	static class RowHolder {
 		TextView name;
-		TextView timeFrom;
-		TextView timeTo;
+//		TextView timeFrom;
+//		TextView timeTo;
 		TextView from;
 		TextView to;
 		TextView recurrence;

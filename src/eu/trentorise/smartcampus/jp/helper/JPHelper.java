@@ -16,6 +16,7 @@
 package eu.trentorise.smartcampus.jp.helper;
 
 import it.sayservice.platform.smartplanner.data.message.Itinerary;
+import it.sayservice.platform.smartplanner.data.message.journey.RecurrentJourney;
 import it.sayservice.platform.smartplanner.data.message.journey.SingleJourney;
 import it.sayservice.platform.smartplanner.data.message.otpbeans.Route;
 import it.sayservice.platform.smartplanner.data.message.otpbeans.Stop;
@@ -25,13 +26,17 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -46,7 +51,10 @@ import eu.trentorise.smartcampus.android.common.LocationHelper;
 import eu.trentorise.smartcampus.jp.Config;
 import eu.trentorise.smartcampus.jp.custom.data.BasicAlert;
 import eu.trentorise.smartcampus.jp.custom.data.BasicItinerary;
+import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourney;
 import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourneyParameters;
+import eu.trentorise.smartcampus.jp.custom.data.BasicRoute;
+import eu.trentorise.smartcampus.jp.custom.data.RecurrentTemp;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -423,6 +431,400 @@ return monitor;
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 		}
 	}
+
+//	private static String exammpleRouteString=new String(
+//			"[{\"type\": \"BUS\",\"agencyId\": \"12\",\"tripId\": \"\",\"routeId\": \"5\",\"monitor\": \"true\"},""+
+//					"{\"type\": \"BUS\",\"agencyId\": \"12\",\"tripId\": \"\",\"routeId\": \"13\",\"monitor\": \"false\"},""+
+//					"{\"type\": \"BUS\",\"agencyId\": \"12\",\"tripId\": \"\",\"routeId\": \"17\",\"monitor\": \"false\"},""+
+//					"{\"type\": \"BUS\",\"agencyId\": \"10\",\"tripId\": \"\",\"routeId\": \"16\",\"monitor\": \"true\"}]");
+	
+	
+	private static String myJourneyString=new String(	"{"+
+"    \"name\": \"test\","+
+"    \"data\": {"+
+"        \"parameters\": {"+
+"            \"time\": \"3:48pm\","+
+"            \"from\": {"+
+"                \"name\": null,"+
+"                \"lat\": \"46.062005\","+
+"                \"lon\": \"11.129169\","+
+"                \"stopId\": null,"+
+"                \"stopCode\": null"+
+"            },"+
+"            \"to\": {"+
+"                \"name\": null,"+
+"                \"lat\": \"46.068854\","+
+"                \"lon\": \"11.151184\","+
+"                \"stopId\": null,"+
+"                \"stopCode\": null"+
+"            },"+
+"            \"routeType\": \"fastest\","+
+"            \"transportTypes\": ["+
+"                \"TRANSIT\""+
+"            ],"+
+"            \"recurrence\": \"1,4\","+
+"            \"interval\": 7200000,"+
+"            \"fromDate\": 1347487200000,"+
+"            \"toDate\": 1356130800000,"+
+"            \"resultsNumber\": 1"+
+"        },"+
+"        \"monitorLegs\": {"+
+"            \"12_13\": true,"+
+"            \"12_16\": true,"+
+"            \"12_5\": true,"+
+"            \"12_7\": true"+
+"        },"+
+"        \"legs\": ["+
+"            {"+
+"                \"transport\": {"+
+"                    \"type\": \"BUS\","+
+"                    \"agencyId\": \"12\","+
+"                    \"routeId\": \"7\","+
+"                    \"tripId\": \"07R-Feriale_047\""+
+"                },"+
+"                \"from\": \"dei Mille  \"Villa Igea\"\","+
+"                \"to\": \"S.Francesco  Porta Nuova\""+
+"            },"+
+"            {"+
+"                \"transport\": {"+
+"                    \"type\": \"BUS\","+
+"                    \"agencyId\": \"12\","+
+"                    \"routeId\": \"5\","+
+"                    \"tripId\": \"05A-Feriale_056\""+
+"                },"+
+"                \"from\": \"S.Francesco  Porta Nuova\","+
+"                \"to\": \"POVO  Piazza Manci\""+
+"            },"+
+"            {"+
+"                \"transport\": {"+
+"                    \"type\": \"BUS\","+
+"                    \"agencyId\": \"12\","+
+"                    \"routeId\": \"16\","+
+"                    \"tripId\": \"16A-Feriale_005\""+
+"                },"+
+"                \"from\": \"MESIANO  \"Fac. Ingegneria\"\","+
+"                \"to\": \"POVO  Valoni\""+
+"            },"+
+"            {"+
+"                \"transport\": {"+
+"                    \"type\": \"BUS\","+
+"                    \"agencyId\": \"12\","+
+"                    \"routeId\": \"13\","+
+"                    \"tripId\": \"13A-Feriale_016\""+
+"                },"+
+"                \"from\": \"3 Nov.  \"Ponte Cavalleggeri\"\","+
+"                \"to\": \"POVO  Piazza Manci\""+
+"            },"+
+"            {"+
+"                \"transport\": {"+
+"                    \"type\": \"BUS\","+
+"                    \"agencyId\": \"12\","+
+"                    \"routeId\": \"7\","+
+"                    \"tripId\": \"07R-Feriale_048\""+
+"                },"+
+"                \"from\": \"dei Mille  \"Villa Igea\"\","+
+"                \"to\": \"S.Francesco  Porta Nuova\""+
+"            },"+
+"            {"+
+"                \"transport\": {"+
+"                    \"type\": \"BUS\","+
+"                    \"agencyId\": \"12\","+
+"                    \"routeId\": \"5\","+
+"                    \"tripId\": \"05A-Feriale_057\""+
+"                },"+
+"                \"from\": \"S.Francesco  Porta Nuova\","+
+"                \"to\": \"POVO  Piazza Manci\""+
+"            },"+
+"            {"+
+"                \"transport\": {"+
+"                    \"type\": \"BUS\","+
+"                    \"agencyId\": \"12\","+
+"                    \"routeId\": \"13\","+
+"                    \"tripId\": \"13A-Feriale_017\""+
+"                },"+
+"                \"from\": \"3 Nov.  \"Ponte Cavalleggeri\"\","+
+"                \"to\": \"POVO  Piazza Manci\""+
+"            },"+
+"            {"+
+"                \"transport\": {"+
+"                    \"type\": \"BUS\","+
+"                    \"agencyId\": \"12\","+
+"                    \"routeId\": \"7\","+
+"                    \"tripId\": \"07R-Festivo_018\""+
+"                },"+
+"                \"from\": \"dei Mille  \"Villa Igea\"\","+
+"                \"to\": \"S.Francesco  Porta Nuova\""+
+"            },"+
+"            {"+
+"                \"transport\": {"+
+"                    \"type\": \"BUS\","+
+"                    \"agencyId\": \"12\","+
+"                    \"routeId\": \"5\","+
+"                    \"tripId\": \"05A-Festivo_010\""+
+"                },"+
+"                \"from\": \"S.Francesco  Porta Nuova\","+
+"                \"to\": \"POVO  Valoni\""+
+"            },"+
+"            {"+
+"                \"transport\": {"+
+"                    \"type\": \"BUS\","+
+"                    \"agencyId\": \"12\","+
+"                    \"routeId\": \"7\","+
+"                    \"tripId\": \"07R-Festivo_016\""+
+"                },"+
+"                \"from\": \"dei Mille  \"Villa Igea\"\","+
+"                \"to\": \"S.Francesco  Porta Nuova\""+
+"            },"+
+"            {"+
+"                \"transport\": {"+
+"                    \"type\": \"BUS\","+
+"                    \"agencyId\": \"12\","+
+"                    \"routeId\": \"5\","+
+"                    \"tripId\": \"05A-Festivo_009\""+
+"                },"+
+"                \"from\": \"S.Francesco  Porta Nuova\","+
+"                \"to\": \"POVO  Valoni\""+
+"            }"+
+"        ]"+
+"    },"+
+"    \"clientId\": \"qwe\","+
+"    \"monitor\": true,"+
+"    \"id\": null,"+
+"    \"version\": 0,"+
+"    \"user\": null,"+
+"    \"updateTime\": -1"+
+"}\0");
+	private static String exammpleRouteString=new String(
+			"{"+
+"    \"parameters\": {"+
+"        \"time\": \"2:48pm\","+
+"        \"from\": {"+
+"            \"name\": null,"+
+"            \"lat\": \"46.062005\","+
+"            \"lon\": \"11.129169\","+
+"            \"stopId\": null,"+
+"            \"stopCode\": null"+
+"        },"+
+"        \"to\": {"+
+"            \"name\": null,"+
+"            \"lat\": \"46.068854\","+
+"            \"lon\": \"11.151184\","+
+"            \"stopId\": null,"+
+"            \"stopCode\": null"+
+"        },"+
+"        \"routeType\": \"fastest\","+
+"        \"transportTypes\": ["+
+"            \"TRANSIT\""+
+"        ],"+
+"        \"recurrence\": \"1,4\","+
+"        \"interval\": 7200000,"+
+"        \"fromDate\": 1347487200000,"+
+"        \"toDate\": 1356130800000,"+
+"        \"resultsNumber\": 1"+
+"    },"+
+"    \"monitorLegs\": {"+
+"        \"12_13\": true,"+
+"        \"12_16\": true,"+
+"        \"12_5\": true,"+
+"        \"12_7\": true"+
+"    },"+
+"    \"legs\": ["+
+"        {"+
+"            \"transport\": {"+
+"                \"type\": \"BUS\","+
+"                \"agencyId\": \"12\","+
+"                \"routeId\": \"7\","+
+"                \"tripId\": \"07R-Feriale_047\""+
+"            },"+
+"            \"from\": \"dei Mille  \"Villa Igea\"\","+
+"            \"to\": \"S.Francesco  Porta Nuova\""+
+"        },"+
+"        {"+
+"            \"transport\": {"+
+"                \"type\": \"BUS\","+
+"                \"agencyId\": \"12\","+
+"                \"routeId\": \"5\","+
+"                \"tripId\": \"05A-Feriale_056\""+
+"            },"+
+"            \"from\": \"S.Francesco  Porta Nuova\","+
+"            \"to\": \"POVO  Piazza Manci\""+
+"        },"+
+"        {"+
+"            \"transport\": {"+
+"                \"type\": \"BUS\","+
+"                \"agencyId\": \"12\","+
+"                \"routeId\": \"16\","+
+"                \"tripId\": \"16A-Feriale_005\""+
+"            },"+
+"            \"from\": \"MESIANO  \"Fac. Ingegneria\"\","+
+"            \"to\": \"POVO  Valoni\""+
+"        },"+
+"        {"+
+"            \"transport\": {"+
+"                \"type\": \"BUS\","+
+"                \"agencyId\": \"12\","+
+"                \"routeId\": \"13\","+
+"                \"tripId\": \"13A-Feriale_016\""+
+"            },"+
+"            \"from\": \"3 Nov.  \"Ponte Cavalleggeri\"\","+
+"            \"to\": \"POVO  Piazza Manci\""+
+"        },"+
+"        {"+
+"            \"transport\": {"+
+"                \"type\": \"BUS\","+
+"                \"agencyId\": \"12\","+
+"                \"routeId\": \"7\","+
+"                \"tripId\": \"07R-Feriale_048\""+
+"            },"+
+"            \"from\": \"dei Mille  \"Villa Igea\"\","+
+"            \"to\": \"S.Francesco  Porta Nuova\""+
+"        },"+
+"        {"+
+"            \"transport\": {"+
+"                \"type\": \"BUS\","+
+"                \"agencyId\": \"12\","+
+"                \"routeId\": \"5\","+
+"                \"tripId\": \"05A-Feriale_057\""+
+"            },"+
+"            \"from\": \"S.Francesco  Porta Nuova\","+
+"            \"to\": \"POVO  Piazza Manci\""+
+"        },"+
+"        {"+
+"            \"transport\": {"+
+"                \"type\": \"BUS\","+
+"                \"agencyId\": \"12\","+
+"                \"routeId\": \"13\","+
+"                \"tripId\": \"13A-Feriale_017\""+
+"            },"+
+"            \"from\": \"3 Nov.  \"Ponte Cavalleggeri\"\","+
+"            \"to\": \"POVO  Piazza Manci\""+
+"        },"+
+"        {"+
+"            \"transport\": {"+
+"                \"type\": \"BUS\","+
+"                \"agencyId\": \"12\","+
+"                \"routeId\": \"7\","+
+"                \"tripId\": \"07R-Festivo_018\""+
+"            },"+
+"            \"from\": \"dei Mille  \"Villa Igea\"\","+
+"            \"to\": \"S.Francesco  Porta Nuova\""+
+"        },"+
+"        {"+
+"            \"transport\": {"+
+"                \"type\": \"BUS\","+
+"                \"agencyId\": \"12\","+
+"                \"routeId\": \"5\","+
+"                \"tripId\": \"05A-Festivo_010\""+
+"            },"+
+"            \"from\": \"S.Francesco  Porta Nuova\","+
+"            \"to\": \"POVO  Valoni\""+
+"        },"+
+"        {"+
+"            \"transport\": {"+
+"                \"type\": \"BUS\","+
+"                \"agencyId\": \"12\","+
+"                \"routeId\": \"7\","+
+"                \"tripId\": \"07R-Festivo_016\""+
+"            },"+
+"            \"from\": \"dei Mille  \"Villa Igea\"\","+
+"            \"to\": \"S.Francesco  Porta Nuova\""+
+"        },"+
+"        {"+
+"            \"transport\": {"+
+"                \"type\": \"BUS\","+
+"                \"agencyId\": \"12\","+
+"                \"routeId\": \"5\","+
+"                \"tripId\": \"05A-Festivo_009\""+
+"            },"+
+"            \"from\": \"S.Francesco  Porta Nuova\","+
+"            \"to\": \"POVO  Valoni\""+
+"        }"+
+"    ]"+
+"}");
+	
+	public static List<BasicRecurrentJourney> getRecurItinerary(BasicRecurrentJourneyParameters brj) throws ConnectionException, ProtocolException,
+	SecurityException {
+
+//		if (brj != null) {
+//			String json = JSONUtils.convertToJSON(brj);
+//			MessageRequest req = null;
+//			if (brj.getClientId() != null) {
+//				req = new MessageRequest(
+//						GlobalConfig.getAppUrl(instance.mContext),
+//						Config.TARGET_ADDRESS + Config.CALL_PLAN_RECUR + "/"
+//								+ brj.getClientId());
+//				req.setMethod(Method.PUT);
+//			} else {
+//				req = new MessageRequest(
+//						GlobalConfig.getAppUrl(instance.mContext),
+//						Config.TARGET_ADDRESS + Config.CALL_PLAN_RECUR);
+//				req.setMethod(Method.POST);
+//			}
+//			req.setBody(json);
+//
+//			JPHelper.instance.getProtocolCarrier().invokeSync(req,
+//					Config.APP_TOKEN, getAuthToken());
+//			return  eu.trentorise.smartcampus.android.common.Utils.convertJSONToObject(exammpleRouteString,
+//					RecurrentJourney.class);
+//		}
+		return  eu.trentorise.smartcampus.android.common.Utils.convertJSONToObjects(myJourneyString,
+				BasicRecurrentJourney.class);
+		
+		
+	}
+	
+	public static RecurrentJourney planRecurItinerary(BasicRecurrentJourneyParameters brj) throws ConnectionException, ProtocolException,
+	SecurityException {
+
+		if (brj != null) {
+			String json = JSONUtils.convertToJSON(brj);
+			MessageRequest req = null;
+			if (brj.getClientId() != null) {
+				req = new MessageRequest(
+						GlobalConfig.getAppUrl(instance.mContext),
+						Config.TARGET_ADDRESS + Config.CALL_PLAN_RECUR + "/"
+								+ brj.getClientId());
+				req.setMethod(Method.PUT);
+			} else {
+				req = new MessageRequest(
+						GlobalConfig.getAppUrl(instance.mContext),
+						Config.TARGET_ADDRESS + Config.CALL_PLAN_RECUR);
+				req.setMethod(Method.POST);
+			}
+			req.setBody(json);
+
+			JPHelper.instance.getProtocolCarrier().invokeSync(req,
+					Config.APP_TOKEN, getAuthToken());
+			return  eu.trentorise.smartcampus.android.common.Utils.convertJSONToObject(exammpleRouteString,
+					RecurrentJourney.class);
+		}
+		return  eu.trentorise.smartcampus.android.common.Utils.convertJSONToObject(exammpleRouteString,
+				RecurrentJourney.class);
+		
+		
+	}
+	
+	public static Boolean saveMyRecurrentJourney (BasicRecurrentJourney brj) throws ConnectionException,
+	ProtocolException, SecurityException {
+		
+		if (brj != null) {
+			String json = JSONUtils.convertToJSON(brj);
+			MessageRequest req = null;
+			if (brj.getClientId() != null) {
+				req = new MessageRequest(GlobalConfig.getAppUrl(instance.mContext), Config.TARGET_ADDRESS + Config.CALL_SAVE_RECUR + "/"
+						+ brj.getClientId());
+				req.setMethod(Method.PUT);
+			} else {
+				req = new MessageRequest(GlobalConfig.getAppUrl(instance.mContext), Config.TARGET_ADDRESS + Config.CALL_SAVE_RECUR);
+				req.setMethod(Method.POST);
+			}
+			req.setBody(json);
+
+			JPHelper.instance.getProtocolCarrier().invokeSync(req, Config.APP_TOKEN, getAuthToken());
+			return true;
+		}
+		return false;
+}
 
 
 }

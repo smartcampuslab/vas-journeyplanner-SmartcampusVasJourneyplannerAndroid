@@ -66,8 +66,8 @@ public class HomeActivity extends BaseActivity {
 			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			startActivity(intent);
 			return;
-		case R.id.btn_monitorrecurrentjourney:
-			intent = new Intent(this, PlanRecurJourneyActivity.class);
+		case R.id.btn_monitorsavedjourney:
+			intent = new Intent(this, SavedJourneyActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			startActivity(intent);
 			return;

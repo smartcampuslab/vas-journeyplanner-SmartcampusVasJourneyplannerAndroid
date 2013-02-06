@@ -211,12 +211,16 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 		Spinner spinner = (Spinner) getView().findViewById(R.id.recurrence);
 		spinner.setAdapter(new ArrayAdapter<String>(getSherlockActivity(), android.R.layout.simple_spinner_item, RECURRENCE));
 		if (params.getData().getRecurrence() != null) {
-			spinner.setSelection(mapRecurrenceInv(params.getData().getRecurrence()));
+			/* get recurrence from parameters and set on ui*/
+			
+			//			spinner.setSelection(mapRecurrenceInv(params.getData().getRecurrence()));
 		}
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				params.getData().setRecurrence(mapRecurrence(position));
+				
+				/*set recurrence on parameters*/
+//				params.getData().setRecurrence(mapRecurrence(position));
 			}
 
 			@Override
@@ -373,7 +377,9 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 				rj.setTransportTypes((TType[]) userPrefsHolder.getTransportTypes());
 				rj.setRouteType(userPrefsHolder.getRouteType());
 
-				rj.setRecurrence(mapRecurrence(((Spinner) getView().findViewById(R.id.recurrence)).getSelectedItemPosition()));
+				/*set recurrence on the ui*/
+				
+//				rj.setRecurrence(mapRecurrence(((Spinner) getView().findViewById(R.id.recurrence)).getSelectedItemPosition()));
 
 				 days.clear();
 				 CheckBox mondayCheckBox = (CheckBox) getView().findViewById(R.id.monday_checkbox);

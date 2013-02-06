@@ -27,10 +27,12 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -41,6 +43,7 @@ import android.widget.ToggleButton;
 import eu.trentorise.smartcampus.android.common.SCAsyncTask;
 import eu.trentorise.smartcampus.jp.Config;
 import eu.trentorise.smartcampus.jp.R;
+import eu.trentorise.smartcampus.jp.custom.ItinerariesListAdapter.RowHolder;
 import eu.trentorise.smartcampus.jp.custom.data.BasicItinerary;
 import eu.trentorise.smartcampus.jp.custom.draw.LineDrawView;
 import eu.trentorise.smartcampus.jp.helper.JPHelper;
@@ -72,15 +75,16 @@ public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 
 			holder = new RowHolder();
 			holder.name = (TextView) row.findViewById(R.id.its_name);
-//			holder.timeFrom = (TextView) row.findViewById(R.id.its_time_from);
+			holder.timeFrom = (TextView) row.findViewById(R.id.its_time_from);
 			holder.locationFrom = (TextView) row.findViewById(R.id.its_location_from);
 
 //			holder.line = (FrameLayout) row.findViewById(R.id.its_line);
-//			holder.timeTo = (TextView) row.findViewById(R.id.its_time_to);
+			holder.timeTo = (TextView) row.findViewById(R.id.its_time_to);
 			holder.locationTo = (TextView) row.findViewById(R.id.its_location_to);
 			holder.transportTypes = (LinearLayout) row.findViewById(R.id.its_transporttypes);
 			holder.monitor = (ToggleButton) row.findViewById(R.id.its_monitor);
-			
+			holder.day= (TextView) row.findViewById(R.id.its_day);
+
 
 			row.setTag(holder);
 		} else {
@@ -97,18 +101,27 @@ public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 
 		Itinerary itinerary = myItinerary.getData();
 
-		// time from
+		
+		// day of the week
 		Date timeFrom = new Date(itinerary.getStartime());
+		String dateFromString = Config.FORMAT_DATE_UI.format(timeFrom);
+		holder.day.setText(dateFromString);
+
+		// time from
 		String timeFromString = Config.FORMAT_TIME_UI.format(timeFrom);
-//		holder.timeFrom.setText(timeFromString);
-		holder.locationFrom.setText(myItinerary.getOriginalFrom().getName());
+		holder.timeFrom.setText(timeFromString);
+		
+		//from 
+		holder.locationFrom.setText(Html.fromHtml("<i>"+context.getString(R.string.label_from)+" </i>"+myItinerary.getOriginalFrom().getName()));
 		
 
 		// time to
 		Date timeTo = new Date(itinerary.getEndtime());
 		String timeToString = Config.FORMAT_TIME_UI.format(timeTo);
-//		holder.timeTo.setText(timeToString);
-		holder.locationTo.setText(myItinerary.getOriginalTo().getName());
+		holder.timeTo.setText(timeToString);
+		
+		//to
+		holder.locationTo.setText(Html.fromHtml("<i>"+context.getString(R.string.label_to)+" </i>"+myItinerary.getOriginalTo().getName()));
 
 
 		// line between times
@@ -122,13 +135,47 @@ public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 			}
 		}
 
+		
+
+		 
 		holder.transportTypes.removeAllViews();
 		for (TType t : transportTypesList) {
-			ImageView imgv = Utils.getImageByTType(getContext(), t);
-			if (imgv.getDrawable() != null) {
-				holder.transportTypes.addView(imgv);
+			ImageView imgv =new ImageView(getContext());
+
+		
+			if (holder.transportTypes.getChildCount()>=2)
+			{
+				//rimuovi l'ultimo, aggiungi i 3 punti e esci dal for
+				imgv.setImageResource(R.drawable.ic_three_dot);
+				if (imgv.getDrawable() != null)
+					{
+						 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0,LayoutParams.MATCH_PARENT,1);
+						 imgv.setLayoutParams(lp);
+						holder.transportTypes.removeViewAt(holder.transportTypes.getChildCount()-1);
+						holder.transportTypes.addView(imgv);
+						break;
+					}
 			}
+			else {
+				imgv = Utils.getImageByTType(getContext(), t);
+			
+			if (imgv.getDrawable() != null)
+				{
+					 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0,LayoutParams.MATCH_PARENT,1);
+					 imgv.setLayoutParams(lp);
+					holder.transportTypes.addView(imgv);
+				}
+			}
+
 		}
+		if (holder.transportTypes.getChildCount()==1)
+		{
+			ImageView imgv =new ImageView(getContext());
+			 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0,LayoutParams.MATCH_PARENT,1);
+			 imgv.setLayoutParams(lp);
+			holder.transportTypes.addView(imgv);
+		}
+		
 
 		/*Set monitor on or off and clicklistener*/
 
@@ -157,11 +204,12 @@ public class MyItinerariesListAdapter extends ArrayAdapter<BasicItinerary> {
 
 	static class RowHolder {
 		TextView name;
-//		TextView timeFrom;
+		TextView day;
+		TextView timeFrom;
 		TextView locationFrom;
 		ToggleButton monitor;
 		FrameLayout line;
-//		TextView timeTo;
+		TextView timeTo;
 		TextView locationTo;
 		LinearLayout transportTypes;
 	}

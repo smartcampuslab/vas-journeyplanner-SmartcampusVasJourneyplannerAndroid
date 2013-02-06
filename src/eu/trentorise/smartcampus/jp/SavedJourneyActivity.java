@@ -22,14 +22,14 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.jp.custom.TabListener;
 
-public class PlanRecurJourneyActivity extends BaseActivity {
+public class SavedJourneyActivity extends BaseActivity {
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setTitle(R.string.title_plan_recur);
+		getSupportActionBar().setTitle(R.string.title_saved_journey);
 	}
 
 	
@@ -44,14 +44,14 @@ public class PlanRecurJourneyActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// New journey
-		ActionBar.Tab tab = getSupportActionBar().newTab().setText(R.string.tab_plannew);
-		tab.setTabListener(new TabListener<PlanRecurJourneyFragment>(this, Config.PLAN_NEW_FRAGMENT_TAG,
-				PlanRecurJourneyFragment.class, Config.mainlayout));
+		// New my one off journey
+		ActionBar.Tab tab = getSupportActionBar().newTab().setText(R.string.tab_myoneoffjourneys);
+		tab.setTabListener(new TabListener<MyItinerariesFragment>(this, Config.PLAN_NEW_FRAGMENT_TAG,
+				MyItinerariesFragment.class, Config.mainlayout));
 		getSupportActionBar().addTab(tab);
 
-		// My journeys
-		tab = getSupportActionBar().newTab().setText(R.string.tab_myjourneys);
+		// My rec journeys
+		tab = getSupportActionBar().newTab().setText(R.string.tab_myrecjourneys);
 		tab.setTabListener(new TabListener<MyRecurItinerariesFragment>(this, Config.MY_JOURNEYS_FRAGMENT_TAG,
 				MyRecurItinerariesFragment.class, Config.mainlayout));
 		getSupportActionBar().addTab(tab);

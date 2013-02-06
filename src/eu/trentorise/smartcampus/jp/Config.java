@@ -32,6 +32,10 @@ public class Config {
 	public static final String CALL_PLANSINGLEJOURNEY = "/plansinglejourney";
 	public static final String CALL_ITINERARY = "/eu.trentorise.smartcampus.journeyplanner.sync.BasicItinerary";
 	public static final String CALL_RECUR = "/eu.trentorise.smartcampus.journeyplanner.sync.BasicRecurrentJourneyParameters";
+
+	public static final String CALL_PLAN_RECUR = "/plansinglejourney";
+	public static final String CALL_SAVE_RECUR = "/eu.trentorise.smartcampus.journeyplanner.sync.BasicRecurrentJourney";
+
 	public static final String CALL_MONITOR = "/monitoritinerary";
 	public static final String CALL_BUS_ROUTES = "/getroutes"; // agencyId
 	public static final String CALL_BUS_STOPS = "/getstops"; // agencyId,
