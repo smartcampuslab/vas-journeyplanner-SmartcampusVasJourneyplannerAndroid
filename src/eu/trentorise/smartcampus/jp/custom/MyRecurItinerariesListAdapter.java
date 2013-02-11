@@ -19,7 +19,9 @@ import it.sayservice.platform.smartplanner.data.message.TType;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
@@ -41,23 +43,36 @@ import eu.trentorise.smartcampus.jp.PlanRecurJourneyFragment;
 import eu.trentorise.smartcampus.jp.R;
 import eu.trentorise.smartcampus.jp.custom.MyItinerariesListAdapter.MonitorMyItineraryProcessor;
 import eu.trentorise.smartcampus.jp.custom.data.BasicItinerary;
+import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourney;
 import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourneyParameters;
 import eu.trentorise.smartcampus.jp.helper.JPHelper;
 import eu.trentorise.smartcampus.jp.helper.Utils;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJourneyParameters> {
+public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJourney> {
 
 	Context context;
 	int layoutResourceId;
-	List<BasicRecurrentJourneyParameters> myItineraries;
+	List<BasicRecurrentJourney> myItineraries;
+    static Map<Integer,String> mp=new HashMap<Integer,String>();  
 
 
-	public MyRecurItinerariesListAdapter(Context context, int layoutResourceId, List<BasicRecurrentJourneyParameters> myItineraries) {
+	public MyRecurItinerariesListAdapter(Context context, int layoutResourceId, List<BasicRecurrentJourney> myItineraries) {
 		super(context, layoutResourceId, myItineraries);
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
 		this.myItineraries = myItineraries;
+		init();
+	}
+
+	private void init() {
+        mp.put(1,"Su");  
+        mp.put(2,"Mo");  
+        mp.put(3,"Tu");  
+        mp.put(4,"We");  
+        mp.put(5,"Th");  
+        mp.put(6,"Fr");  
+        mp.put(7,"Sa");  		
 	}
 
 	@Override
@@ -84,7 +99,7 @@ public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 			holder = (RowHolder) row.getTag();
 		}
 
-		BasicRecurrentJourneyParameters myItinerary = getItem(position);
+		BasicRecurrentJourney myItinerary = getItem(position);
 		if (myItinerary.getName() != null && myItinerary.getName().length() > 0) {
 			holder.name.setText(myItinerary.getName());
 		} else {
@@ -92,22 +107,25 @@ public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 		}
 
 		try {
-			Date time = Config.FORMAT_TIME_SMARTPLANNER.parse(myItinerary.getData().getTime());
+			Date time = Config.FORMAT_TIME_SMARTPLANNER.parse(myItinerary.getData().getParameters().getTime());
 			// time from
 //			holder.timeFrom.setText(Config.FORMAT_TIME_UI.format(time));
 			// time to
-			time.setTime(time.getTime()+myItinerary.getData().getInterval());
+			time.setTime(time.getTime()+myItinerary.getData().getParameters().getInterval());
 //			holder.timeTo.setText(Config.FORMAT_TIME_UI.format(time));
 		} catch (ParseException e) {
 		}
 		// position from
-		holder.from.setText(Html.fromHtml("<i>"+context.getString(R.string.label_from)+" </i>"+myItinerary.getData().getFrom().getName()));
+		holder.from.setText(Html.fromHtml("<i>"+context.getString(R.string.label_from)+" </i>"+myItinerary.getData().getParameters().getFrom().getName()));
 		// position to
-		holder.to.setText(Html.fromHtml("<i>"+context.getString(R.string.label_to)+" </i>"+myItinerary.getData().getFrom().getName()));
+		holder.to.setText(Html.fromHtml("<i>"+context.getString(R.string.label_to)+" </i>"+myItinerary.getData().getParameters().getFrom().getName()));
 		
 		// recurrence 
 //		holder.recurrence.setText(PlanRecurJourneyFragment.getRecurrenceString(myItinerary.getData().getRecurrence()));
-		holder.recurrence.setText(Html.fromHtml("<i>"+context.getString(R.string.label_days)+" </i>"+"Mo Tu We Th Fr Sa Su"));
+		
+//		holder.recurrence.setText(Html.fromHtml("<i>"+context.getString(R.string.label_days)+" </i>"+"Mo Tu We Th Fr Sa Su"));
+		holder.recurrence.setText(Html.fromHtml("<i>"+context.getString(R.string.label_days)+" </i>"+setRecurrenceByNumber(myItinerary.getData().getParameters().getRecurrence())));
+
 //		// transport types
 //		holder.transportTypes.removeAllViews();
 //		for (TType t : myItinerary.getData().getTransportTypes()) {
@@ -141,18 +159,30 @@ public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 		return row;
 	}
 
+	private String setRecurrenceByNumber(List<Integer> list) {
+		String daysOfWeek = new String();
+		for (Integer day : list) {
+			daysOfWeek=daysOfWeek+" "+checkDay(day);
+		}
+		return daysOfWeek;
+	}
+	public static String checkDay(Integer day)  
+    {  
+     
+        return mp.get(day);  
+    }  
+	
+
 	static class RowHolder {
 		TextView name;
-//		TextView timeFrom;
-//		TextView timeTo;
 		TextView from;
 		TextView to;
 		TextView recurrence;
 		ToggleButton monitor;
 
-		//LinearLayout transportTypes;
 	}
 	
+
 	public class MonitorMyRecItineraryProcessor extends AbstractAsyncTaskProcessor<Object, Boolean> {
 
 		Integer position;

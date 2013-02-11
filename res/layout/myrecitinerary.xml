@@ -24,7 +24,7 @@
         android:id="@+id/myrecitinerary_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:textColor="@android:color/black"
         android:textStyle="bold" />
@@ -33,19 +33,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" 
-        android:padding="10dp" >
+        android:padding="5dp" >
+            <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        
+        android:padding="5dp" >
+        <TextView
+            android:id="@+id/myrecitinerary_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/label_from" />
+
+        <TextView
+            android:id="@+id/myrecitinerary_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:layout_weight="0.5"
+             android:gravity="right"
+            
+            android:text="@string/label_to" />
+        </LinearLayout>
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" 
-        android:padding="10dp" >    
+        android:padding="5dp" >    
 
         <TextView
             android:id="@+id/myrecitinerary_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="" />
+            android:text="@string/label_from" />
 
         <TextView
             android:id="@+id/myrecitinerary_to"
@@ -53,32 +75,10 @@
             android:layout_height="wrap_content"
                         android:layout_weight="0.5"
             android:gravity="right"
-            android:text="" />
-
-        </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" 
-        
-        android:padding="10dp" >
-        <TextView
-            android:id="@+id/myrecitinerary_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-            
-            android:text="@string/label_from" />
-
-        <TextView
-            android:id="@+id/myrecitinerary_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-             android:gravity="right"
-            
             android:text="@string/label_to" />
+
         </LinearLayout>
+
         </LinearLayout>
 
 
@@ -87,6 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+         android:background="@color/sc_light_gray"
         android:cacheColorHint="@android:color/transparent" >
     </ListView>
 
@@ -104,5 +105,21 @@
 
 <!--         android:layout_gravity="center_vertical" -->
 <!--     </LinearLayout> -->
+
+    <LinearLayout
+        android:id="@+id/save_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/myrecitinerary_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="true"
+            android:text="@string/recurr_save" />
+    </LinearLayout>
 
 </LinearLayout>

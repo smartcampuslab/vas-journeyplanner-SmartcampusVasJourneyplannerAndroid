@@ -366,25 +366,7 @@ return monitor;
 		return false;
 	}
 
-	public static List<BasicRecurrentJourneyParameters> getMyRecurItineraries() throws ConnectionException,
-			ProtocolException, SecurityException, JSONException, JsonParseException, JsonMappingException, IOException {
-		MessageRequest req = new MessageRequest(GlobalConfig.getAppUrl(instance.mContext), Config.TARGET_ADDRESS + Config.CALL_RECUR);
-		req.setMethod(Method.GET);
 
-		MessageResponse res = JPHelper.instance.getProtocolCarrier().invokeSync(req, Config.APP_TOKEN, getAuthToken());
-		return eu.trentorise.smartcampus.android.common.Utils.convertJSONToObjects(res.getBody(),
-				BasicRecurrentJourneyParameters.class);
-		//
-		// JSONArray dobjs = new JSONArray(res.getBody());
-		// for (int i = 0; i < dobjs.length(); i++) {
-		// JSONObject dobj = dobjs.getJSONObject(i);
-		// BasicRecurrentJourneyParameters it =
-		// JSONUtils.getFullMapper().readValue(dobj.getString("content"),
-		// BasicRecurrentJourneyParameters.class);
-		// list.add(it);
-		// }
-		// return list;
-	}
 
 	public static void deleteMyRecurItinerary(String id) throws ConnectionException, ProtocolException,
 			SecurityException {
@@ -439,20 +421,20 @@ return monitor;
 //					"{\"type\": \"BUS\",\"agencyId\": \"10\",\"tripId\": \"\",\"routeId\": \"16\",\"monitor\": \"true\"}]");
 	
 	
-	private static String myJourneyString=new String(	"{"+
+	private static String myJourneysString=new String(	"[{"+
 "    \"name\": \"test\","+
 "    \"data\": {"+
 "        \"parameters\": {"+
 "            \"time\": \"3:48pm\","+
 "            \"from\": {"+
-"                \"name\": null,"+
+"                \"name\": \"from prova\","+
 "                \"lat\": \"46.062005\","+
 "                \"lon\": \"11.129169\","+
 "                \"stopId\": null,"+
 "                \"stopCode\": null"+
 "            },"+
 "            \"to\": {"+
-"                \"name\": null,"+
+"                \"name\": \"to prova\","+
 "                \"lat\": \"46.068854\","+
 "                \"lon\": \"11.151184\","+
 "                \"stopId\": null,"+
@@ -462,7 +444,7 @@ return monitor;
 "            \"transportTypes\": ["+
 "                \"TRANSIT\""+
 "            ],"+
-"            \"recurrence\": \"1,4\","+
+"            \"recurrence\": [1,4],"+
 "            \"interval\": 7200000,"+
 "            \"fromDate\": 1347487200000,"+
 "            \"toDate\": 1356130800000,"+
@@ -470,8 +452,8 @@ return monitor;
 "        },"+
 "        \"monitorLegs\": {"+
 "            \"12_13\": true,"+
-"            \"12_16\": true,"+
-"            \"12_5\": true,"+
+"            \"12_16\": false,"+
+"            \"12_5\": false,"+
 "            \"12_7\": true"+
 "        },"+
 "        \"legs\": ["+
@@ -482,7 +464,7 @@ return monitor;
 "                    \"routeId\": \"7\","+
 "                    \"tripId\": \"07R-Feriale_047\""+
 "                },"+
-"                \"from\": \"dei Mille  \"Villa Igea\"\","+
+"                \"from\": \"dei Mille  \\\"Villa Igea\\\"\","+
 "                \"to\": \"S.Francesco  Porta Nuova\""+
 "            },"+
 "            {"+
@@ -502,7 +484,7 @@ return monitor;
 "                    \"routeId\": \"16\","+
 "                    \"tripId\": \"16A-Feriale_005\""+
 "                },"+
-"                \"from\": \"MESIANO  \"Fac. Ingegneria\"\","+
+"                \"from\": \"MESIANO  \\\"Fac. Ingegneria\\\"\","+
 "                \"to\": \"POVO  Valoni\""+
 "            },"+
 "            {"+
@@ -512,7 +494,7 @@ return monitor;
 "                    \"routeId\": \"13\","+
 "                    \"tripId\": \"13A-Feriale_016\""+
 "                },"+
-"                \"from\": \"3 Nov.  \"Ponte Cavalleggeri\"\","+
+"                \"from\": \"3 Nov.  \\\"Ponte Cavalleggeri\\\"\","+
 "                \"to\": \"POVO  Piazza Manci\""+
 "            },"+
 "            {"+
@@ -522,7 +504,7 @@ return monitor;
 "                    \"routeId\": \"7\","+
 "                    \"tripId\": \"07R-Feriale_048\""+
 "                },"+
-"                \"from\": \"dei Mille  \"Villa Igea\"\","+
+"                \"from\": \"dei Mille  \\\"Villa Igea\\\"\","+
 "                \"to\": \"S.Francesco  Porta Nuova\""+
 "            },"+
 "            {"+
@@ -542,7 +524,7 @@ return monitor;
 "                    \"routeId\": \"13\","+
 "                    \"tripId\": \"13A-Feriale_017\""+
 "                },"+
-"                \"from\": \"3 Nov.  \"Ponte Cavalleggeri\"\","+
+"                \"from\": \"3 Nov.  \\\"Ponte Cavalleggeri\\\"\","+
 "                \"to\": \"POVO  Piazza Manci\""+
 "            },"+
 "            {"+
@@ -552,7 +534,7 @@ return monitor;
 "                    \"routeId\": \"7\","+
 "                    \"tripId\": \"07R-Festivo_018\""+
 "                },"+
-"                \"from\": \"dei Mille  \"Villa Igea\"\","+
+"                \"from\": \"dei Mille  \\\"Villa Igea\\\"\","+
 "                \"to\": \"S.Francesco  Porta Nuova\""+
 "            },"+
 "            {"+
@@ -572,7 +554,7 @@ return monitor;
 "                    \"routeId\": \"7\","+
 "                    \"tripId\": \"07R-Festivo_016\""+
 "                },"+
-"                \"from\": \"dei Mille  \"Villa Igea\"\","+
+"                \"from\": \"dei Mille  \\\"Villa Igea\\\"\","+
 "                \"to\": \"S.Francesco  Porta Nuova\""+
 "            },"+
 "            {"+
@@ -593,20 +575,19 @@ return monitor;
 "    \"version\": 0,"+
 "    \"user\": null,"+
 "    \"updateTime\": -1"+
-"}\0");
-	private static String exammpleRouteString=new String(
-			"{"+
+"}]");
+	private static String exammpleRouteString=new String(	"{"+
 "    \"parameters\": {"+
 "        \"time\": \"2:48pm\","+
 "        \"from\": {"+
-"            \"name\": null,"+
+"            \"name\": \"from provina\","+
 "            \"lat\": \"46.062005\","+
 "            \"lon\": \"11.129169\","+
 "            \"stopId\": null,"+
 "            \"stopCode\": null"+
 "        },"+
 "        \"to\": {"+
-"            \"name\": null,"+
+"            \"name\": \"to provina\","+
 "            \"lat\": \"46.068854\","+
 "            \"lon\": \"11.151184\","+
 "            \"stopId\": null,"+
@@ -616,7 +597,7 @@ return monitor;
 "        \"transportTypes\": ["+
 "            \"TRANSIT\""+
 "        ],"+
-"        \"recurrence\": \"1,4\","+
+"            \"recurrence\": [1,4],"+
 "        \"interval\": 7200000,"+
 "        \"fromDate\": 1347487200000,"+
 "        \"toDate\": 1356130800000,"+
@@ -636,7 +617,7 @@ return monitor;
 "                \"routeId\": \"7\","+
 "                \"tripId\": \"07R-Feriale_047\""+
 "            },"+
-"            \"from\": \"dei Mille  \"Villa Igea\"\","+
+"            \"from\": \"dei Mille  \\\"Villa Igea\\\"\","+
 "            \"to\": \"S.Francesco  Porta Nuova\""+
 "        },"+
 "        {"+
@@ -656,7 +637,7 @@ return monitor;
 "                \"routeId\": \"16\","+
 "                \"tripId\": \"16A-Feriale_005\""+
 "            },"+
-"            \"from\": \"MESIANO  \"Fac. Ingegneria\"\","+
+"            \"from\": \"MESIANO  \\\"Fac. Ingegneria\\\"\","+
 "            \"to\": \"POVO  Valoni\""+
 "        },"+
 "        {"+
@@ -666,7 +647,7 @@ return monitor;
 "                \"routeId\": \"13\","+
 "                \"tripId\": \"13A-Feriale_016\""+
 "            },"+
-"            \"from\": \"3 Nov.  \"Ponte Cavalleggeri\"\","+
+"            \"from\": \"3 Nov.  \\\"Ponte Cavalleggeri\\\"\","+
 "            \"to\": \"POVO  Piazza Manci\""+
 "        },"+
 "        {"+
@@ -676,7 +657,7 @@ return monitor;
 "                \"routeId\": \"7\","+
 "                \"tripId\": \"07R-Feriale_048\""+
 "            },"+
-"            \"from\": \"dei Mille  \"Villa Igea\"\","+
+"            \"from\": \"dei Mille  \\\"Villa Igea\\\"\","+
 "            \"to\": \"S.Francesco  Porta Nuova\""+
 "        },"+
 "        {"+
@@ -696,7 +677,7 @@ return monitor;
 "                \"routeId\": \"13\","+
 "                \"tripId\": \"13A-Feriale_017\""+
 "            },"+
-"            \"from\": \"3 Nov.  \"Ponte Cavalleggeri\"\","+
+"            \"from\": \"3 Nov.  \\\"Ponte Cavalleggeri\\\"\","+
 "            \"to\": \"POVO  Piazza Manci\""+
 "        },"+
 "        {"+
@@ -706,7 +687,7 @@ return monitor;
 "                \"routeId\": \"7\","+
 "                \"tripId\": \"07R-Festivo_018\""+
 "            },"+
-"            \"from\": \"dei Mille  \"Villa Igea\"\","+
+"            \"from\": \"dei Mille  \\\"Villa Igea\\\"\","+
 "            \"to\": \"S.Francesco  Porta Nuova\""+
 "        },"+
 "        {"+
@@ -726,7 +707,7 @@ return monitor;
 "                \"routeId\": \"7\","+
 "                \"tripId\": \"07R-Festivo_016\""+
 "            },"+
-"            \"from\": \"dei Mille  \"Villa Igea\"\","+
+"            \"from\": \"dei Mille  \\\"Villa Igea\\\"\","+
 "            \"to\": \"S.Francesco  Porta Nuova\""+
 "        },"+
 "        {"+
@@ -742,6 +723,7 @@ return monitor;
 "    ]"+
 "}");
 	
+	/*molto probabilmente e' un singolo e non una lista*/
 	public static List<BasicRecurrentJourney> getRecurItinerary(BasicRecurrentJourneyParameters brj) throws ConnectionException, ProtocolException,
 	SecurityException {
 
@@ -765,9 +747,9 @@ return monitor;
 //			JPHelper.instance.getProtocolCarrier().invokeSync(req,
 //					Config.APP_TOKEN, getAuthToken());
 //			return  eu.trentorise.smartcampus.android.common.Utils.convertJSONToObject(exammpleRouteString,
-//					RecurrentJourney.class);
+//					RecurrentJourney.class);params.getData().getParameters().getTo().getName()
 //		}
-		return  eu.trentorise.smartcampus.android.common.Utils.convertJSONToObjects(myJourneyString,
+		return  eu.trentorise.smartcampus.android.common.Utils.convertJSONToObjects(myJourneysString,
 				BasicRecurrentJourney.class);
 		
 		
@@ -776,8 +758,8 @@ return monitor;
 	public static RecurrentJourney planRecurItinerary(BasicRecurrentJourneyParameters brj) throws ConnectionException, ProtocolException,
 	SecurityException {
 
-		if (brj != null) {
-			String json = JSONUtils.convertToJSON(brj);
+		if (brj.getClientId() != null) {
+			String json = JSONUtils.convertToJSON(brj.getData());
 			MessageRequest req = null;
 			if (brj.getClientId() != null) {
 				req = new MessageRequest(
@@ -793,8 +775,8 @@ return monitor;
 			}
 			req.setBody(json);
 
-			JPHelper.instance.getProtocolCarrier().invokeSync(req,
-					Config.APP_TOKEN, getAuthToken());
+//			JPHelper.instance.getProtocolCarrier().invokeSync(req,
+//					Config.APP_TOKEN, getAuthToken());
 			return  eu.trentorise.smartcampus.android.common.Utils.convertJSONToObject(exammpleRouteString,
 					RecurrentJourney.class);
 		}
@@ -820,11 +802,22 @@ return monitor;
 			}
 			req.setBody(json);
 
-			JPHelper.instance.getProtocolCarrier().invokeSync(req, Config.APP_TOKEN, getAuthToken());
+//			JPHelper.instance.getProtocolCarrier().invokeSync(req, Config.APP_TOKEN, getAuthToken());
 			return true;
 		}
 		return false;
 }
 
+	public static List<BasicRecurrentJourney> getMyRecurItineraries() throws ConnectionException,
+			ProtocolException, SecurityException, JSONException, JsonParseException, JsonMappingException, IOException {
+//		MessageRequest req = new MessageRequest(GlobalConfig.getAppUrl(instance.mContext), Config.TARGET_ADDRESS + Config.CALL_GET_ALL_RECUR);
+//		req.setMethod(Method.GET);
+//		
+//		MessageResponse res = JPHelper.instance.getProtocolCarrier().invokeSync(req, Config.APP_TOKEN, getAuthToken());
+		return eu.trentorise.smartcampus.android.common.Utils.convertJSONToObjects(myJourneysString,
+				BasicRecurrentJourney.class);
+//		return eu.trentorise.smartcampus.android.common.Utils.convertJSONToObjects(res.getBody(),
+//				BasicRecurrentJourney.class);
 
+}
 }

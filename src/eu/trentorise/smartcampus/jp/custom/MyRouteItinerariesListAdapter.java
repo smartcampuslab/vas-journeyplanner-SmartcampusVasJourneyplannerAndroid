@@ -26,30 +26,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 import eu.trentorise.smartcampus.jp.R;
 import eu.trentorise.smartcampus.jp.custom.data.BasicItinerary;
 import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourney;
 import eu.trentorise.smartcampus.jp.custom.data.BasicRoute;
+import eu.trentorise.smartcampus.jp.custom.data.RecurrentItinerary;
 import eu.trentorise.smartcampus.jp.custom.data.RecurrentTemp;
 import eu.trentorise.smartcampus.jp.helper.JPHelper;
+import eu.trentorise.smartcampus.jp.helper.Utils;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-public class MyRouteItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJourney> {
+public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinerary> {
 
 	Context context;
 	int layoutResourceId;
-	List<BasicRecurrentJourney> myItineraries;
+	List<RecurrentItinerary> myItineraries;
+	LinearLayout saveLayout;
 	
-	public MyRouteItinerariesListAdapter(Context context, int layoutResourceId, List<BasicRecurrentJourney> myItineraries) {
+	public MyRouteItinerariesListAdapter(Context context, int layoutResourceId, List<RecurrentItinerary> myItineraries, LinearLayout saveLayout) {
 		super(context, layoutResourceId, myItineraries);
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
 		this.myItineraries = myItineraries;
+		this.saveLayout = saveLayout;
 	}
 
 	@Override
@@ -62,10 +70,10 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 			row = inflater.inflate(layoutResourceId, parent, false);
 
 			holder = new RowHolder();
-			holder.name = (TextView) row.findViewById(R.id.its_name);
-			holder.locationFrom = (TextView) row.findViewById(R.id.its_location_from);
-			holder.locationTo = (TextView) row.findViewById(R.id.its_location_to);
-			holder.transportTypes = (LinearLayout) row.findViewById(R.id.its_transporttypes);
+			holder.name = (TextView) row.findViewById(R.id.itname);
+			holder.locationFrom = (TextView) row.findViewById(R.id.itlocation_from);
+			holder.locationTo = (TextView) row.findViewById(R.id.itlocation_to);
+			holder.transportTypes = (LinearLayout) row.findViewById(R.id.ittransporttypes);
 			holder.monitor = (CheckBox) row.findViewById(R.id.its_monitor);
 			
 
@@ -73,68 +81,27 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 		} else {
 			holder = (RowHolder) row.getTag();
 		}
-		BasicRecurrentJourney myItinerary = myItineraries.get(position);
+		RecurrentItinerary myItinerary = myItineraries.get(position);
 		holder.name.setText(myItinerary.getName());
-		RecurrentJourney journey = myItinerary.getData();
-		//holder.locationFrom.setText(journey.get.ge)
+		holder.locationFrom.setText(myItinerary.getFrom());
+		holder.locationTo.setText(myItinerary.getTo());
 
-//		Itinerary itinerary = myItinerary.getData();
-//
-//		// time from
-//		Date timeFrom = new Date(itinerary.getStartime());
-//		String timeFromString = Config.FORMAT_TIME_UI.format(timeFrom);
-////		holder.timeFrom.setText(timeFromString);
-//		holder.locationFrom.setText(itinerary.getFrom().getName());
-//		
-//
-//		// time to
-//		Date timeTo = new Date(itinerary.getEndtime());
-//		String timeToString = Config.FORMAT_TIME_UI.format(timeTo);
-////		holder.timeTo.setText(timeToString);
-//		holder.locationTo.setText(itinerary.getTo().getName());
-//
-//
-//		// line between times
-////		holder.line.addView(new LineDrawView(getContext()));
-//
-//		// transport types
-//		List<TType> transportTypesList = new ArrayList<TType>();
-//		for (Leg l : itinerary.getLeg()) {
-//			if (!transportTypesList.contains(l.getTransport().getType())) {
-//				transportTypesList.add(l.getTransport().getType());
-//			}
-//		}
-//
-//		holder.transportTypes.removeAllViews();
-//		for (TType t : transportTypesList) {
-//			ImageView imgv = Utils.getImageByTType(getContext(), t);
-//			if (imgv.getDrawable() != null) {
-//				holder.transportTypes.addView(imgv);
-//			}
-//		}
-//
-//		/*Set monitor on or off and clicklistener*/
-//
-//		holder.monitor.setOnCheckedChangeListener(null);
-//		holder.monitor.setChecked(myItinerary.isMonitor());
-//		if (myItinerary.isMonitor())
-//			holder.monitor.setBackgroundResource(R.drawable.ic_monitor_on); 
-//		else holder.monitor.setBackgroundResource(R.drawable.ic_monitor_off);
-//		 holder.monitor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//			@Override
-//			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//				
-//				switch(buttonView.getId()) {
-//	            case R.id.its_monitor:
-//	            	SCAsyncTask<Object, Void, Boolean> task = new SCAsyncTask<Object,Void , Boolean>((SherlockFragmentActivity) context,
-//						new MonitorMyItineraryProcessor((SherlockFragmentActivity) context));
-//	            	task.execute(Boolean.toString(isChecked), myItineraries,position);
-//				break;
-//				default:
-//					return;
-//				}
-//			}
-//		});
+		ImageView imgv = Utils.getImageByTType(getContext(), myItinerary.getTransportType());
+		if (imgv.getDrawable() != null) {
+			holder.transportTypes.removeAllViews();
+			holder.transportTypes.addView(imgv);
+		}
+		
+		holder.monitor.setChecked(myItinerary.isMonitor());
+		holder.monitor.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				saveLayout.setVisibility(View.VISIBLE);
+				
+			}
+		});
+
 		return row;
 	}
 

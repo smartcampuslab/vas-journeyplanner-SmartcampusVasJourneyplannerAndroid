@@ -32,12 +32,13 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.android.common.SCAsyncTask;
 import eu.trentorise.smartcampus.jp.custom.MyRecurItinerariesListAdapter;
+import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourney;
 import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourneyParameters;
 import eu.trentorise.smartcampus.jp.helper.processor.GetMyRecurItinerariesProcessor;
 
 public class MyRecurItinerariesFragment extends SherlockFragment {
 
-	private List<BasicRecurrentJourneyParameters> myItineraries = new ArrayList<BasicRecurrentJourneyParameters>();
+	private List<BasicRecurrentJourney> myItineraries = new ArrayList<BasicRecurrentJourney>();
 	private MyRecurItinerariesListAdapter adapter;
 
 	@Override
@@ -63,7 +64,7 @@ public class MyRecurItinerariesFragment extends SherlockFragment {
 				R.layout.recur_itinerarychoices_row, myItineraries);
 		myJourneysList.setAdapter(adapter);
 
-		SCAsyncTask<Void, Void, List<BasicRecurrentJourneyParameters>> task = new SCAsyncTask<Void, Void, List<BasicRecurrentJourneyParameters>>(
+		SCAsyncTask<Void, Void, List<BasicRecurrentJourney>> task = new SCAsyncTask<Void, Void, List<BasicRecurrentJourney>>(
 				getSherlockActivity(), new GetMyRecurItinerariesProcessor(getSherlockActivity(), adapter));
 		task.execute();
 

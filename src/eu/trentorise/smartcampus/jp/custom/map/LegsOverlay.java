@@ -95,8 +95,11 @@ public class LegsOverlay extends com.google.android.maps.Overlay {
 			}
 
 		}
-		
-		drawPath(legsPoints.get(index), ctx.getResources().getColor(R.color.path_actual), mv, canvas);
+		if (index==-1)//show start leg
+			drawPath(legsPoints.get(index+1), ctx.getResources().getColor(R.color.path_actual), mv, canvas);
+		else if (index == legsPoints.size())//show end leg
+			drawPath(legsPoints.get(legsPoints.size()-1), ctx.getResources().getColor(R.color.path_actual), mv, canvas);
+		else drawPath(legsPoints.get(index), ctx.getResources().getColor(R.color.path_actual), mv, canvas);
 
 		return true;
 	}
