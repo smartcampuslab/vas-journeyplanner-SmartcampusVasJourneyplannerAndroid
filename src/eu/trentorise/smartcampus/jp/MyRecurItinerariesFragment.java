@@ -71,16 +71,7 @@ public class MyRecurItinerariesFragment extends SherlockFragment {
 		myJourneysList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//				FragmentTransaction fragmentTransaction = getSherlockActivity().getSupportFragmentManager()
-//						.beginTransaction();
-//				Fragment fragment = new PlanRecurJourneyFragment();
-//				Bundle b = new Bundle();
-//				b.putSerializable(PlanRecurJourneyFragment.PARAMS, adapter.getItem(position));
-//				fragment.setArguments(b);
-//				fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//				fragmentTransaction.replace(Config.mainlayout, fragment);
-//				fragmentTransaction.addToBackStack(null);
-//				fragmentTransaction.commit();
+
 				FragmentTransaction fragmentTransaction = getSherlockActivity().getSupportFragmentManager()
 						.beginTransaction();
 				Fragment fragment = new MyRecurItineraryFragment();

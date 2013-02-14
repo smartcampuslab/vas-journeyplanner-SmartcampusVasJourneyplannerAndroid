@@ -15,10 +15,12 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.jp.helper.processor;
 
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
+import eu.trentorise.smartcampus.jp.HomeActivity;
 import eu.trentorise.smartcampus.jp.R;
 import eu.trentorise.smartcampus.jp.custom.AbstractAsyncTaskProcessor;
 import eu.trentorise.smartcampus.jp.custom.data.BasicItinerary;
@@ -40,6 +42,9 @@ public class SaveItineraryProcessor extends AbstractAsyncTaskProcessor<BasicItin
 
 	@Override
 	public void handleResult(Void result) {
+		Intent intent = new Intent(activity, HomeActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		activity.startActivity(intent);
 		Toast toast = Toast.makeText(activity, R.string.journey_saved_alert, Toast.LENGTH_SHORT);
 		toast.show();
 	}

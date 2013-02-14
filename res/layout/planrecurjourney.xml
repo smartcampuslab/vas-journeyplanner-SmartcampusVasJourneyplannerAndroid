@@ -43,13 +43,13 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal" >
 
-                <EditText
-                    android:id="@+id/name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/recur_name"/>
+<!--                 <EditText -->
+<!--                     android:id="@+id/name" -->
+<!--                     android:layout_width="0dp" -->
+<!--                     android:layout_height="wrap_content" -->
+<!--                     android:layout_weight="1" -->
+<!--                     android:ems="10" -->
+<!--                     android:hint="@string/recur_name"/> -->
                 
             </LinearLayout>
 

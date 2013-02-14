@@ -1,20 +1,20 @@
 package eu.trentorise.smartcampus.jp.custom.data;
 
-import it.sayservice.platform.smartplanner.data.message.TType;
+import it.sayservice.platform.smartplanner.data.message.Transport;
 
 public class RecurrentItinerary {
 private String name;
-private TType transportType;
+private Transport transport;
 private String from;
 private String to;
 private boolean monitor;
 
 
-public RecurrentItinerary(String name, TType transportType, String from,
+public RecurrentItinerary(String name, Transport transport, String from,
 		String to, boolean monitor) {
 	super();
 	this.name = name;
-	this.transportType = transportType;
+	this.transport = transport;
 	this.from = from;
 	this.to = to;
 	this.monitor = monitor;
@@ -37,11 +37,11 @@ public String getName() {
 public void setName(String name) {
 	this.name = name;
 }
-public TType getTransportType() {
-	return transportType;
+public Transport getTransport() {
+	return transport;
 }
-public void setTransportType(TType transportType) {
-	this.transportType = transportType;
+public void setTransportType(Transport transportType) {
+	this.transport = transport;
 }
 public boolean isMonitor() {
 	return monitor;

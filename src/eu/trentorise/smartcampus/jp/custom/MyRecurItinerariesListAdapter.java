@@ -118,7 +118,7 @@ public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 		// position from
 		holder.from.setText(Html.fromHtml("<i>"+context.getString(R.string.label_from)+" </i>"+myItinerary.getData().getParameters().getFrom().getName()));
 		// position to
-		holder.to.setText(Html.fromHtml("<i>"+context.getString(R.string.label_to)+" </i>"+myItinerary.getData().getParameters().getFrom().getName()));
+		holder.to.setText(Html.fromHtml("<i>"+context.getString(R.string.label_to)+" </i>"+myItinerary.getData().getParameters().getTo().getName()));
 		
 		// recurrence 
 //		holder.recurrence.setText(PlanRecurJourneyFragment.getRecurrenceString(myItinerary.getData().getRecurrence()));
@@ -149,7 +149,7 @@ public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 	            case R.id.its_monitor:
 	            	SCAsyncTask<Object, Void, Boolean> task = new SCAsyncTask<Object,Void , Boolean>((SherlockFragmentActivity) context,
 						new MonitorMyRecItineraryProcessor((SherlockFragmentActivity) context));
-	            	task.execute(Boolean.toString(isChecked), myItineraries,position);
+	            	task.execute(Boolean.toString(isChecked), myItineraries.get(position).getClientId(),position);
 				break;
 				default:
 					return;
@@ -186,7 +186,7 @@ public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 	public class MonitorMyRecItineraryProcessor extends AbstractAsyncTaskProcessor<Object, Boolean> {
 
 		Integer position;
-		List<BasicRecurrentJourneyParameters> myItineraries;
+		//List<BasicRecurrentJourneyParameters> myItineraries;
 		String id;
 		
 		public MonitorMyRecItineraryProcessor(SherlockFragmentActivity activity) {
@@ -199,8 +199,8 @@ public class MyRecurItinerariesListAdapter extends ArrayAdapter<BasicRecurrentJo
 			// 1: id
 			boolean monitor = Boolean.parseBoolean((String) params[0]);
 			 position = (Integer) params[2];
-			 myItineraries=(List<BasicRecurrentJourneyParameters>) params[1];
-			 id =  myItineraries.get(position).getClientId();
+			// myItineraries=(List<BasicRecurrentJourneyParameters>) params[1];
+			 id =  (String) params[1];
 			return JPHelper.monitorMyRecItinerary(monitor, id);
 		}
 

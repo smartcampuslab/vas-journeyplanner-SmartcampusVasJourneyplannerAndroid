@@ -15,14 +15,17 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.jp.custom;
 
+import it.sayservice.platform.smartplanner.data.message.SimpleLeg;
 import it.sayservice.platform.smartplanner.data.message.journey.RecurrentJourney;
 
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -50,14 +53,27 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinera
 	Context context;
 	int layoutResourceId;
 	List<RecurrentItinerary> myItineraries;
+	Map<String, RecurrentItinerary> itineraryInformation;
 	LinearLayout saveLayout;
+	RecurrentJourney myjourney;
+	Map<String, List<SimpleLeg>> allLegs;
+	Map<String, List<SimpleLeg>> myLegs;
+	Map<String, Boolean> mylegsmonitor;
+
 	
-	public MyRouteItinerariesListAdapter(Context context, int layoutResourceId, List<RecurrentItinerary> myItineraries, LinearLayout saveLayout) {
+	public MyRouteItinerariesListAdapter(Context context, int layoutResourceId, List<RecurrentItinerary> myItineraries, Map<String, RecurrentItinerary> itineraryInformation, RecurrentJourney myjourney, Map<String, List<SimpleLeg>> mylegs, Map<String, List<SimpleLeg>> alllegs, LinearLayout saveLayout, Map<String, Boolean> mylegsmonitor) {
 		super(context, layoutResourceId, myItineraries);
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
 		this.myItineraries = myItineraries;
+		this.itineraryInformation=itineraryInformation;
 		this.saveLayout = saveLayout;
+		this.myjourney = myjourney;
+		this.allLegs = alllegs;
+		this.myLegs = mylegs;
+		this.mylegsmonitor = mylegsmonitor;
+		
+		//inizializzo 
 	}
 
 	@Override
@@ -75,7 +91,28 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinera
 			holder.locationTo = (TextView) row.findViewById(R.id.itlocation_to);
 			holder.transportTypes = (LinearLayout) row.findViewById(R.id.ittransporttypes);
 			holder.monitor = (CheckBox) row.findViewById(R.id.its_monitor);
-			
+			holder.monitor.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					RecurrentItinerary myItinerary = myItineraries.get(position);
+					
+					if (((CheckBox)v).isChecked())
+					{
+						myLegs.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(), allLegs.get(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId()));
+						mylegsmonitor.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(),true);
+						myItineraries.get(position).setMonitor(true);
+					}
+					else
+						{
+						myLegs.remove(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId());
+						mylegsmonitor.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(),false);
+						myItineraries.get(position).setMonitor(false);
+				
+						}
+					saveLayout.setVisibility(View.VISIBLE);					
+				}
+			});			
 
 			row.setTag(holder);
 		} else {
@@ -86,21 +123,13 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinera
 		holder.locationFrom.setText(myItinerary.getFrom());
 		holder.locationTo.setText(myItinerary.getTo());
 
-		ImageView imgv = Utils.getImageByTType(getContext(), myItinerary.getTransportType());
+		ImageView imgv = Utils.getImageByTType(getContext(), myItinerary.getTransport().getType());
 		if (imgv.getDrawable() != null) {
 			holder.transportTypes.removeAllViews();
 			holder.transportTypes.addView(imgv);
 		}
-		
 		holder.monitor.setChecked(myItinerary.isMonitor());
-		holder.monitor.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				saveLayout.setVisibility(View.VISIBLE);
-				
-			}
-		});
+
 
 		return row;
 	}
@@ -113,7 +142,6 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinera
 		CheckBox monitor;
 
 	}
-	
 	public class MonitorMyItineraryProcessor extends AbstractAsyncTaskProcessor<Object, Boolean> {
 
 		Integer position;
@@ -142,5 +170,9 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinera
 			notifyDataSetChanged();
 
 		}
+	}
+	public void changeMonitor(Map<String, Boolean> monitorLegs) {
+		this.mylegsmonitor = mylegsmonitor;
+		
 	}
 }

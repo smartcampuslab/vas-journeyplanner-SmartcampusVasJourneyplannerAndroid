@@ -134,6 +134,8 @@
 	<string name="plan_timing">Timing</string>
 	<string name="plan_location">Location</string>
 	
+	<string name="saved_journey">Journey Saved</string>
+	<string name="deleted_journey">Journey Deleted</string>
 	<string name="label_from">From : </string>
 	<string name="label_to">To : </string>
 	<string name="label_days">Days : </string>

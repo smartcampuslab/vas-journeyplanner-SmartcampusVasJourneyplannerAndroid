@@ -21,11 +21,12 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import eu.trentorise.smartcampus.jp.custom.AbstractAsyncTaskProcessor;
 import eu.trentorise.smartcampus.jp.custom.MyRecurItinerariesListAdapter;
+import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourney;
 import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourneyParameters;
 import eu.trentorise.smartcampus.jp.helper.JPHelper;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-public class GetMyRecurItinerariesProcessor extends AbstractAsyncTaskProcessor<Void, List<BasicRecurrentJourneyParameters>> {
+public class GetMyRecurItinerariesProcessor extends AbstractAsyncTaskProcessor<Void, List<BasicRecurrentJourney>> {
 
 	private MyRecurItinerariesListAdapter adapter;
 
@@ -35,18 +36,18 @@ public class GetMyRecurItinerariesProcessor extends AbstractAsyncTaskProcessor<V
 	}
 
 	@Override
-	public List<BasicRecurrentJourneyParameters> performAction(Void... params) throws SecurityException, Exception {
+	public List<BasicRecurrentJourney> performAction(Void... params) throws SecurityException, Exception {
 		return JPHelper.getMyRecurItineraries();
 	}
 
 	@Override
-	public void handleResult(List<BasicRecurrentJourneyParameters> result) {
-		// if (!result.isEmpty()) {
+	public void handleResult(List<BasicRecurrentJourney> result) {
+		 if (!result.isEmpty()) {
 		adapter.clear();
-		for (BasicRecurrentJourneyParameters myt : result) {
+		for (BasicRecurrentJourney myt : result) {
 			adapter.add(myt);
 		}
 		adapter.notifyDataSetChanged();
-		// }
+		 }
 	}
 }

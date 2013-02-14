@@ -55,6 +55,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 
+import eu.trentorise.smartcampus.ac.Constants;
 import eu.trentorise.smartcampus.android.common.SCAsyncTask;
 import eu.trentorise.smartcampus.jp.custom.AbstractAsyncTaskProcessor;
 import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourney;
@@ -150,14 +151,13 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
+		if (params.getClientId()!=null)
+		{
 		getSherlockActivity().getSupportMenuInflater().inflate(R.menu.gripmenu, menu);
 		SubMenu submenu = menu.getItem(0).getSubMenu();
 		submenu.clear();
-
 		submenu.add(Menu.CATEGORY_SYSTEM, R.id.menu_item_delete, Menu.NONE,
 				R.string.menu_item_delete);
-		if (params!=null)
-		{
 		if (params.isMonitor())
 			submenu.add(Menu.CATEGORY_SYSTEM, R.id.menu_item_monitor, Menu.NONE,R.string.menu_item_monitor_off);
 		else submenu.add(Menu.CATEGORY_SYSTEM, R.id.menu_item_monitor, Menu.NONE,R.string.menu_item_monitor_on);
@@ -208,8 +208,8 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-		if (params.getName() != null)
-			((EditText) getView().findViewById(R.id.name)).setText(params.getName());
+//		if (params.getName() != null)
+//			((EditText) getView().findViewById(R.id.name)).setText(params.getName());
 //		((CheckBox) getView().findViewById(R.id.recur_monitor)).setChecked(params.isMonitor());
 //		Spinner spinner = (Spinner) getView().findViewById(R.id.recurrence);
 //		spinner.setAdapter(new ArrayAdapter<String>(getSherlockActivity(), android.R.layout.simple_spinner_item, RECURRENCE));
@@ -273,12 +273,12 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 					userPrefsHolder = PrefsHelper.sharedPreferences2Holder(userPrefs);
 				}
 
-				EditText name = (EditText) getView().findViewById(R.id.name);
-				if (name.getText() == null || name.getText().toString().length() == 0) {
-					Toast.makeText(getActivity(), R.string.name_field_empty, Toast.LENGTH_SHORT).show();
-					return;
-				}
-				params.setName(name.getText().toString().trim());
+//				EditText name = (EditText) getView().findViewById(R.id.name);
+//				if (name.getText() == null || name.getText().toString().length() == 0) {
+//					Toast.makeText(getActivity(), R.string.name_field_empty, Toast.LENGTH_SHORT).show();
+//					return;
+//				}
+//				params.setName(name.getText().toString().trim());
 //				params.setMonitor(((CheckBox) getView().findViewById(R.id.recur_monitor)).isChecked());
 
 				RecurrentJourneyParameters rj = params.getData().getParameters();
@@ -340,6 +340,8 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 					try {
 						toDateD = Config.FORMAT_DATE_UI.parse(timeString.toString());
 						rj.setToDate(toDateD.getTime());
+						if (rj.getFromDate()==rj.getToDate())
+							rj.setToDate( rj.getToDate()+(24 * 60 * 60 * 1000));
 						if ((rj.getToDate() < rj.getFromDate())&&!alwaysCheckbox.isChecked()) {
 							Toast.makeText(getActivity(), R.string.to_date_before_from_date, Toast.LENGTH_SHORT).show();
 							return;
@@ -357,8 +359,9 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 					return;
 				} else {
 					try {
+						//if the interval is negative, add an entire day
 						toTimeD = Config.FORMAT_TIME_UI.parse(timeString.toString());
-						rj.setInterval(toTimeD.getTime() - toDateD.getTime());
+						rj.setInterval(toTimeD.getTime() - fromTimeD.getTime());
 						if (rj.getInterval() < 0)
 							rj.setInterval(rj.getInterval() + 24 * 60 * 60 * 1000);
 						if (rj.getInterval() > Config.MAX_RECUR_INTERVAL) {
@@ -380,7 +383,7 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 				
 				if (alwaysCheckbox.isChecked())
 				{
-					rj.setToDate(Long.MAX_VALUE);
+					rj.setToDate(Config.ALWAYS_DATE);
 				}
 
 				rj.setTransportTypes((TType[]) userPrefsHolder.getTransportTypes());
@@ -502,6 +505,7 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 
 		fromDate = (EditText) getView().findViewById(R.id.recur_date_from);
 		toDate = (EditText) getView().findViewById(R.id.recur_date_to);
+		alwaysCheckbox = (CheckBox) getView().findViewById(R.id.always_checkbox);
 
 		Date newDate = new Date();
 
@@ -530,8 +534,17 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 		fromDate.setText(Config.FORMAT_DATE_UI.format(d));
 
 		d = params.getData().getParameters().getToDate() > 0 ? new Date(params.getData().getParameters().getToDate()) : newDate;
-		toDate.setText(Config.FORMAT_DATE_UI.format(d));
+		if (params.getData().getParameters().getToDate()!=Config.ALWAYS_DATE)
+			toDate.setText(Config.FORMAT_DATE_UI.format(d));
+			else
+			{
+				//mettilo a domani e always mettilo a true
+				alwaysCheckbox.setChecked(true);
+				d=newDate;
+				toDate.setEnabled(false);
 
+			}
+		
 		fromTime.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -594,7 +607,7 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 		}
 		}
 	}
-	public class MonitorMyRecItineraryProcessor extends AbstractAsyncTaskProcessor<String, Boolean> {
+	private class MonitorMyRecItineraryProcessor extends AbstractAsyncTaskProcessor<String, Boolean> {
 		ToggleButton monitorToggleBtn;
 		TextView monitorLabel;
 		public MonitorMyRecItineraryProcessor(SherlockFragmentActivity activity) {
