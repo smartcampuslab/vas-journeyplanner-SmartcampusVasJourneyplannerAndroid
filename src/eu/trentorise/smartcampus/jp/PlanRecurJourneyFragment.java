@@ -44,6 +44,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -80,6 +81,7 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 	private EditText toDate = null;
 	private ToggleButton monitorToggleBtn = null;
 	private CheckBox alwaysCheckbox =null;
+	private LinearLayout monitorLayout = null;
 	@Override
 	public void onSaveInstanceState(Bundle arg0) {
 		super.onSaveInstanceState(arg0);
@@ -464,7 +466,9 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 			}
 		});
 		
-		
+		monitorLayout = (LinearLayout) getView().findViewById(R.id.myitinerary_toggle_layout);
+		if (params.getClientId()!=null){
+		monitorLayout.setVisibility(View.VISIBLE);
 		monitorToggleBtn = (ToggleButton) getView().findViewById(R.id.myitinerary_toggle);
 		TextView monitorLabel= (TextView) getView().findViewById(R.id.myitinerary_monitor_label);
 
@@ -496,6 +500,7 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 				task.execute(Boolean.toString(isChecked), params.getClientId());
 			}
 		});
+		} else monitorLayout.setVisibility(View.GONE);
 	}
 
 	@Override
