@@ -190,8 +190,8 @@
                         android:layout_gravity="right"
                         android:layout_weight="0.25"
                         android:checked="false"
-                        android:textOff="@string/plan_custom_prefs_off"
-                        android:textOn="@string/plan_custom_prefs_on" />
+                        android:textOff="@string/plan_custom_prefs_on"
+                        android:textOn="@string/plan_custom_prefs_off" />
                 </LinearLayout>
 
                 <include

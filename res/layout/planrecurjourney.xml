@@ -36,22 +36,7 @@
             android:padding="10dp" 
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/name_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal" >
 
-<!--                 <EditText -->
-<!--                     android:id="@+id/name" -->
-<!--                     android:layout_width="0dp" -->
-<!--                     android:layout_height="wrap_content" -->
-<!--                     android:layout_weight="1" -->
-<!--                     android:ems="10" -->
-<!--                     android:hint="@string/recur_name"/> -->
-                
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/myitinerary_toggle_layout"
@@ -78,11 +63,6 @@
 
             </LinearLayout>
 
-<!--             <CheckBox -->
-<!--                 android:id="@+id/recur_monitor" -->
-<!--                 android:layout_width="wrap_content" -->
-<!--                 android:layout_height="wrap_content" -->
-<!--                 android:text="@string/recur_monitor" /> -->
     
             <TextView
                     android:id="@+id/plannew_location_label"
@@ -110,26 +90,6 @@
                     android:ems="10"
                     android:hint="@string/plan_from" />
 
-                <!-- <EditText -->
-                <!-- android:id="@+id/plannew_from_text" -->
-                <!-- android:layout_width="0dp" -->
-                <!-- android:layout_height="wrap_content" -->
-                <!-- android:layout_weight="1" -->
-                <!-- android:ems="10" -->
-                <!-- android:focusableInTouchMode="false" -->
-                <!-- android:hint="@string/plan_from" -->
-                <!-- android:singleLine="true" > -->
-                <!-- </EditText> -->
-
-
-                <!-- <ImageButton -->
-                <!-- android:id="@+id/plannew_from_btn" -->
-                <!-- android:layout_width="wrap_content" -->
-                <!-- android:layout_height="wrap_content" -->
-                <!-- android:layout_gravity="center_vertical" -->
-                <!-- android:background="@android:color/transparent" -->
-                <!-- android:contentDescription="@string/plan_from" -->
-                <!-- android:src="@drawable/ic_position" /> -->
 
                 <ImageButton
                     android:id="@+id/plannew_from_opt"
@@ -164,36 +124,7 @@
                     android:ems="10"
                     android:hint="@string/plan_to" />
 
-                <!-- <EditText -->
-                <!-- android:id="@+id/plannew_to_text" -->
-                <!-- android:layout_width="0dp" -->
-                <!-- android:layout_height="wrap_content" -->
-                <!-- android:layout_weight="1" -->
-                <!-- android:ems="10" -->
-                <!-- android:focusableInTouchMode="false" -->
-                <!-- android:hint="@string/plan_to" -->
-                <!-- android:singleLine="true" > -->
-                <!-- </EditText> -->
 
-
-                <!-- <ImageButton -->
-                <!-- android:id="@+id/plannew_to_map" -->
-                <!-- android:layout_width="wrap_content" -->
-                <!-- android:layout_height="wrap_content" -->
-                <!-- android:layout_gravity="center_vertical" -->
-                <!-- android:background="@android:color/transparent" -->
-                <!-- android:contentDescription="@string/plan_to" -->
-                <!-- android:src="@drawable/ic_position" /> -->
-
-
-                <!-- <ImageButton -->
-                <!-- android:id="@+id/plannew_to_btn" -->
-                <!-- android:layout_width="wrap_content" -->
-                <!-- android:layout_height="wrap_content" -->
-                <!-- android:layout_gravity="center_vertical" -->
-                <!-- android:background="@android:color/transparent" -->
-                <!-- android:contentDescription="@string/plan_to" -->
-                <!-- android:src="@drawable/ic_position" /> -->
 
                  <ImageButton
                     android:id="@+id/plannew_to_opt"
@@ -308,12 +239,6 @@
                 android:text="@string/plan_schedule" />
                 
             
-            <!-- <Spinner -->
-            <!-- android:id="@+id/plannew_prefs" -->
-            <!-- android:layout_width="match_parent" -->
-            <!-- android:layout_height="wrap_content" -->
-            <!-- android:layout_below="@id/plannew_when_ll" -->
-            <!-- android:layout_marginBottom="10dp" /> -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -384,8 +309,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:checked="false"
-                    android:textOff="@string/plan_custom_prefs_off"
-                    android:textOn="@string/plan_custom_prefs_on" />
+                    android:textOff="@string/plan_custom_prefs_on"
+                    android:textOn="@string/plan_custom_prefs_off" />
             </LinearLayout>
 
             <include
@@ -409,14 +334,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="@string/recurr_next" />
-<!--         <Button -->
-<!--         android:id="@+id/recurr_delete" -->
-<!--         android:layout_width="0dp" -->
-<!--         android:layout_weight="1" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:text="@string/recurr_delete" /> -->
         
     </LinearLayout>
-    <!-- android:layout_alignParentBottom="true" -->
 
 </LinearLayout>

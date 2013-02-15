@@ -115,8 +115,12 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinera
 			});			
 
 			row.setTag(holder);
+			holder.monitor.setChecked(myItineraries.get(position).isMonitor());
+
 		} else {
 			holder = (RowHolder) row.getTag();
+			holder.monitor.setChecked(myItineraries.get(position).isMonitor());
+
 		}
 		RecurrentItinerary myItinerary = myItineraries.get(position);
 		holder.name.setText(myItinerary.getName());
@@ -128,7 +132,6 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinera
 			holder.transportTypes.removeAllViews();
 			holder.transportTypes.addView(imgv);
 		}
-		holder.monitor.setChecked(myItinerary.isMonitor());
 
 
 		return row;

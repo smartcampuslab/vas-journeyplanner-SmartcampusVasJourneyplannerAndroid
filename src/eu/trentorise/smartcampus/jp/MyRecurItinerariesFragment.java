@@ -26,15 +26,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import eu.trentorise.smartcampus.android.common.SCAsyncTask;
+import eu.trentorise.smartcampus.jp.custom.AbstractAsyncTaskProcessor;
 import eu.trentorise.smartcampus.jp.custom.MyRecurItinerariesListAdapter;
 import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourney;
-import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourneyParameters;
-import eu.trentorise.smartcampus.jp.helper.processor.GetMyRecurItinerariesProcessor;
+import eu.trentorise.smartcampus.jp.helper.JPHelper;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class MyRecurItinerariesFragment extends SherlockFragment {
 
@@ -84,6 +87,44 @@ public class MyRecurItinerariesFragment extends SherlockFragment {
 				fragmentTransaction.commit();
 			}
 		});
+	}
+	
+	public class GetMyRecurItinerariesProcessor extends AbstractAsyncTaskProcessor<Void, List<BasicRecurrentJourney>> {
+
+		private MyRecurItinerariesListAdapter adapter;
+		private TextView noitems;
+
+		public GetMyRecurItinerariesProcessor(SherlockFragmentActivity activity, MyRecurItinerariesListAdapter adapter) {
+			super(activity);
+			this.adapter = adapter;
+			noitems = (TextView) activity.findViewById(R.id.myitinearies_noitems_label);
+
+		}
+
+		@Override
+		public List<BasicRecurrentJourney> performAction(Void... params) throws SecurityException, Exception {
+			return JPHelper.getMyRecurItineraries();
+		}
+
+		@Override
+		public void handleResult(List<BasicRecurrentJourney> result) {
+			 if (!result.isEmpty()) {
+			adapter.clear();
+			for (BasicRecurrentJourney myt : result) {
+				adapter.add(myt);
+			}
+			adapter.notifyDataSetChanged();
+
+			 }
+				if ((result==null)||(result.size()==0))
+				{
+				//put "empty string"
+				noitems.setVisibility(View.VISIBLE);
+				}
+			else {
+				noitems.setVisibility(View.GONE);
+			}
+		}
 	}
 
 }
