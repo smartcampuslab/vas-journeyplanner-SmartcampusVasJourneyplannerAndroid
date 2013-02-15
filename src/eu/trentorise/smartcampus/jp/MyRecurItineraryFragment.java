@@ -130,7 +130,8 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 		{
 		 if (!itineraryInformation.containsKey(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId()))
 		 {
-			 itineraryInformation.put(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId(), new RecurrentItinerary(leg.getTransport().getRouteId(), leg.getTransport(), leg.getFrom(), leg.getTo(), recurrentJourney.getMonitorLegs().get(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId())));
+			 if (recurrentJourney.getMonitorLegs().containsKey(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId()))
+				 itineraryInformation.put(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId(), new RecurrentItinerary(leg.getTransport().getRouteId(), leg.getTransport(), leg.getFrom(), leg.getTo(), recurrentJourney.getMonitorLegs().get(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId())));
 		 }
 		}
 		/*costruisci mylegs coppia agencyid e routeid e lista di leg*/
@@ -153,13 +154,6 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 				alllegs.put(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId(), new ArrayList<SimpleLeg>());
 				alllegs.get(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId()).add(leg);
 			}
-//			if (itineraryInformation.get(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId())!=null)
-//				if (mylegs.get(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId())!=null)
-//					mylegs.get(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId()).add(leg);
-//				else {
-//					mylegs.put(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId(), new ArrayList<SimpleLeg>());
-//					mylegs.get(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId()).add(leg);
-//				}
 
 		}
 		/*per tutte le chiavi, se sono a true inserisco la lista in mylegs*/

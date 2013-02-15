@@ -46,6 +46,7 @@ public class DeleteMyRecurItineraryProcessor extends AbstractAsyncTaskProcessor<
 
 	@Override
 	public void handleResult(Void result) {
+		
 		Toast toast = Toast.makeText(activity, R.string.deleted_journey, Toast.LENGTH_SHORT);
 		toast.show();
 		//activity.getSupportFragmentManager().popBackStackImmediate();

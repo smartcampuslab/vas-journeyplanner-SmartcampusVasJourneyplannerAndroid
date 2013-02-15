@@ -136,6 +136,7 @@
 	
 	<string name="saved_journey">Journey Saved</string>
 	<string name="deleted_journey">Journey Deleted</string>
+	<string name="deleted">deleted </string>
 	<string name="label_from">From : </string>
 	<string name="label_to">To : </string>
 	<string name="label_days">Days : </string>
