@@ -116,24 +116,62 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinera
 
 			row.setTag(holder);
 			holder.monitor.setChecked(myItineraries.get(position).isMonitor());
+			RecurrentItinerary myItinerary = myItineraries.get(position);
+			holder.name.setText(myItinerary.getName());
+			holder.locationFrom.setText(myItinerary.getFrom());
+			holder.locationTo.setText(myItinerary.getTo());
 
+			ImageView imgv = Utils.getImageByTType(getContext(), myItinerary.getTransport().getType());
+			if (imgv.getDrawable() != null) {
+				holder.transportTypes.removeAllViews();
+				holder.transportTypes.addView(imgv);
+			}
 		} else {
-			holder = (RowHolder) row.getTag();
+			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+			row = inflater.inflate(layoutResourceId, parent, false);
+
+			holder = new RowHolder();
+			holder.name = (TextView) row.findViewById(R.id.itname);
+			holder.locationFrom = (TextView) row.findViewById(R.id.itlocation_from);
+			holder.locationTo = (TextView) row.findViewById(R.id.itlocation_to);
+			holder.transportTypes = (LinearLayout) row.findViewById(R.id.ittransporttypes);
+			holder.monitor = (CheckBox) row.findViewById(R.id.its_monitor);
+			holder.monitor.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					RecurrentItinerary myItinerary = myItineraries.get(position);
+					
+					if (((CheckBox)v).isChecked())
+					{
+						myLegs.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(), allLegs.get(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId()));
+						mylegsmonitor.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(),true);
+						myItineraries.get(position).setMonitor(true);
+					}
+					else
+						{
+						myLegs.remove(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId());
+						mylegsmonitor.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(),false);
+						myItineraries.get(position).setMonitor(false);
+				
+						}
+					saveLayout.setVisibility(View.VISIBLE);					
+				}
+			});			
+
+			row.setTag(holder);
 			holder.monitor.setChecked(myItineraries.get(position).isMonitor());
+			RecurrentItinerary myItinerary = myItineraries.get(position);
+			holder.name.setText(myItinerary.getName());
+			holder.locationFrom.setText(myItinerary.getFrom());
+			holder.locationTo.setText(myItinerary.getTo());
 
+			ImageView imgv = Utils.getImageByTType(getContext(), myItinerary.getTransport().getType());
+			if (imgv.getDrawable() != null) {
+				holder.transportTypes.removeAllViews();
+				holder.transportTypes.addView(imgv);
+			}
 		}
-		RecurrentItinerary myItinerary = myItineraries.get(position);
-		holder.name.setText(myItinerary.getName());
-		holder.locationFrom.setText(myItinerary.getFrom());
-		holder.locationTo.setText(myItinerary.getTo());
-
-		ImageView imgv = Utils.getImageByTType(getContext(), myItinerary.getTransport().getType());
-		if (imgv.getDrawable() != null) {
-			holder.transportTypes.removeAllViews();
-			holder.transportTypes.addView(imgv);
-		}
-
-
 		return row;
 	}
 
