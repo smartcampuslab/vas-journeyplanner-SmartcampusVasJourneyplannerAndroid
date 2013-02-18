@@ -83,6 +83,12 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
+            android:name=".SavedJourneyActivity"
+            android:theme="@style/Theme.journeyplanner"
+            android:configChanges="orientation|screenSize"            
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
             android:name=".ViewActivity"
             android:theme="@style/Theme.journeyplanner"
             android:configChanges="orientation|screenSize"            
