@@ -27,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,7 +39,6 @@ import eu.trentorise.smartcampus.jp.custom.AbstractAsyncTaskProcessor;
 import eu.trentorise.smartcampus.jp.custom.MyItinerariesListAdapter;
 import eu.trentorise.smartcampus.jp.custom.data.BasicItinerary;
 import eu.trentorise.smartcampus.jp.helper.JPHelper;
-import eu.trentorise.smartcampus.jp.helper.processor.GetMyItinerariesProcessor;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class MyItinerariesFragment extends SherlockFragment {
@@ -133,7 +131,6 @@ public class MyItinerariesFragment extends SherlockFragment {
 		else {
 			noitems.setVisibility(View.GONE);
 		}
-			// }
 		}
 	}
 

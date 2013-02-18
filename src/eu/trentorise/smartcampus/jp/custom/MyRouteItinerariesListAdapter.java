@@ -53,67 +53,37 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinera
 	Context context;
 	int layoutResourceId;
 	List<RecurrentItinerary> myItineraries;
-	Map<String, RecurrentItinerary> itineraryInformation;
 	LinearLayout saveLayout;
-	RecurrentJourney myjourney;
 	Map<String, List<SimpleLeg>> allLegs;
-	Map<String, List<SimpleLeg>> myLegs;
 	Map<String, Boolean> mylegsmonitor;
 
 	
-	public MyRouteItinerariesListAdapter(Context context, int layoutResourceId, List<RecurrentItinerary> myItineraries, Map<String, RecurrentItinerary> itineraryInformation, RecurrentJourney myjourney, Map<String, List<SimpleLeg>> mylegs, Map<String, List<SimpleLeg>> alllegs, LinearLayout saveLayout, Map<String, Boolean> mylegsmonitor) {
+	public MyRouteItinerariesListAdapter(Context context, int layoutResourceId, List<RecurrentItinerary> myItineraries,  Map<String, List<SimpleLeg>> alllegs, LinearLayout saveLayout, Map<String, Boolean> mylegsmonitor) {
 		super(context, layoutResourceId, myItineraries);
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
 		this.myItineraries = myItineraries;
-		this.itineraryInformation=itineraryInformation;
 		this.saveLayout = saveLayout;
-		this.myjourney = myjourney;
 		this.allLegs = alllegs;
-		this.myLegs = mylegs;
 		this.mylegsmonitor = mylegsmonitor;
 		
-		//inizializzo 
 	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		View row = convertView;
 		RowHolder holder = null;
-
-		if (row == null) {
+			if ((myItineraries!=null) && (myItineraries.get(position)!=null))
+			{
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
-
 			holder = new RowHolder();
 			holder.name = (TextView) row.findViewById(R.id.itname);
 			holder.locationFrom = (TextView) row.findViewById(R.id.itlocation_from);
 			holder.locationTo = (TextView) row.findViewById(R.id.itlocation_to);
 			holder.transportTypes = (LinearLayout) row.findViewById(R.id.ittransporttypes);
 			holder.monitor = (CheckBox) row.findViewById(R.id.its_monitor);
-			holder.monitor.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					RecurrentItinerary myItinerary = myItineraries.get(position);
-					
-					if (((CheckBox)v).isChecked())
-					{
-						myLegs.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(), allLegs.get(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId()));
-						mylegsmonitor.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(),true);
-						myItineraries.get(position).setMonitor(true);
-					}
-					else
-						{
-						myLegs.remove(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId());
-						mylegsmonitor.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(),false);
-						myItineraries.get(position).setMonitor(false);
-				
-						}
-					saveLayout.setVisibility(View.VISIBLE);					
-				}
-			});			
-
+			holder.monitor.setOnClickListener(new CheckMonitorListener(position));
 			row.setTag(holder);
 			holder.monitor.setChecked(myItineraries.get(position).isMonitor());
 			RecurrentItinerary myItinerary = myItineraries.get(position);
@@ -126,52 +96,7 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinera
 				holder.transportTypes.removeAllViews();
 				holder.transportTypes.addView(imgv);
 			}
-		} else {
-			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			row = inflater.inflate(layoutResourceId, parent, false);
-
-			holder = new RowHolder();
-			holder.name = (TextView) row.findViewById(R.id.itname);
-			holder.locationFrom = (TextView) row.findViewById(R.id.itlocation_from);
-			holder.locationTo = (TextView) row.findViewById(R.id.itlocation_to);
-			holder.transportTypes = (LinearLayout) row.findViewById(R.id.ittransporttypes);
-			holder.monitor = (CheckBox) row.findViewById(R.id.its_monitor);
-			holder.monitor.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					RecurrentItinerary myItinerary = myItineraries.get(position);
-					
-					if (((CheckBox)v).isChecked())
-					{
-						myLegs.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(), allLegs.get(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId()));
-						mylegsmonitor.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(),true);
-						myItineraries.get(position).setMonitor(true);
-					}
-					else
-						{
-						myLegs.remove(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId());
-						mylegsmonitor.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(),false);
-						myItineraries.get(position).setMonitor(false);
-				
-						}
-					saveLayout.setVisibility(View.VISIBLE);					
-				}
-			});			
-
-			row.setTag(holder);
-			holder.monitor.setChecked(myItineraries.get(position).isMonitor());
-			RecurrentItinerary myItinerary = myItineraries.get(position);
-			holder.name.setText(myItinerary.getName());
-			holder.locationFrom.setText(myItinerary.getFrom());
-			holder.locationTo.setText(myItinerary.getTo());
-
-			ImageView imgv = Utils.getImageByTType(getContext(), myItinerary.getTransport().getType());
-			if (imgv.getDrawable() != null) {
-				holder.transportTypes.removeAllViews();
-				holder.transportTypes.addView(imgv);
 			}
-		}
 		return row;
 	}
 
@@ -183,37 +108,27 @@ public class MyRouteItinerariesListAdapter extends ArrayAdapter<RecurrentItinera
 		CheckBox monitor;
 
 	}
-	public class MonitorMyItineraryProcessor extends AbstractAsyncTaskProcessor<Object, Boolean> {
-
-		Integer position;
-		List<BasicItinerary> myItineraries;
-		String id;
-		
-		public MonitorMyItineraryProcessor(SherlockFragmentActivity activity) {
-			super(activity);
-		}
-
+	 private class CheckMonitorListener implements OnClickListener{
+		 int position;
+		 public CheckMonitorListener(int position) {
+			 this.position=position;
+			 }
 		@Override
-		public Boolean performAction(Object... params) throws SecurityException, Exception {
-			// 0: monitor
-			// 1: id
-			boolean monitor = Boolean.parseBoolean((String) params[0]);
-			 position = (Integer) params[2];
-			 myItineraries=(List<BasicItinerary>) params[1];
-			 id =  myItineraries.get(position).getClientId();
-			return JPHelper.monitorMyItinerary(monitor, id);
-		}
-
-		@Override
-		public void handleResult(Boolean result) {
-			//cambia background in funzione a quello che ho
-			myItineraries.get(position).setMonitor(result);
-			notifyDataSetChanged();
-
-		}
-	}
-	public void changeMonitor(Map<String, Boolean> monitorLegs) {
-		this.mylegsmonitor = mylegsmonitor;
+		public void onClick(View v) {
+			RecurrentItinerary myItinerary = myItineraries.get(position);
+			
+			if (((CheckBox)v).isChecked())
+			{
+				mylegsmonitor.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(),true);
+				myItineraries.get(position).setMonitor(true);
+			}
+			else
+				{
+				mylegsmonitor.put(myItinerary.getTransport().getAgencyId()+"_"+myItinerary.getTransport().getRouteId(),false);
+				myItineraries.get(position).setMonitor(false);
 		
-	}
+				}
+			saveLayout.setVisibility(View.VISIBLE);					
+		}
+	}	
 }

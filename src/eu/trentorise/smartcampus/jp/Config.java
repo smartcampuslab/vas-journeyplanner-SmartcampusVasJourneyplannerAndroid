@@ -34,7 +34,9 @@ public class Config {
 	public static final String CALL_RECUR = "/eu.trentorise.smartcampus.journeyplanner.sync.BasicRecurrentJourneyParameters";
 
 	public static final String CALL_PLAN_RECUR = "/planrecurrent";
+	public static final String CALL_GET_RECUR = "/eu.trentorise.smartcampus.journeyplanner.sync.BasicRecurrentJourney";
 	public static final String CALL_GET_ALL_RECUR = "/eu.trentorise.smartcampus.journeyplanner.sync.BasicRecurrentJourney";
+	
 	public static final String CALL_SAVE_RECUR = "/eu.trentorise.smartcampus.journeyplanner.sync.BasicRecurrentJourney";
 
 	public static final String CALL_MONITOR = "/monitoritinerary";
@@ -47,7 +49,8 @@ public class Config {
 																		// routeId,
 																		// stopId
 	public static final String CALL_ALERT_SUBMIT = "/submitalert";
-	public static final long ALWAYS_DATE = 9999999999999L;
+	
+	public static final long ALWAYS_DATE = 9999999999999L; //constant used for "always" option
 	// public static final TType[] TTYPES_ALLOWED = new TType[] { TType.BICYCLE,
 	// TType.BUS, TType.CAR, TType.TRAIN,
 	// TType.TRANSIT, TType.WALK };

@@ -16,6 +16,7 @@
 package eu.trentorise.smartcampus.jp;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -23,6 +24,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import eu.trentorise.smartcampus.android.common.SCAsyncTask;
 import eu.trentorise.smartcampus.jp.custom.AbstractAsyncTaskProcessor;
 import eu.trentorise.smartcampus.jp.custom.data.BasicItinerary;
+import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourney;
 import eu.trentorise.smartcampus.jp.custom.data.BasicRecurrentJourneyParameters;
 import eu.trentorise.smartcampus.jp.helper.JPHelper;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
@@ -34,6 +36,7 @@ public class ViewActivity extends BaseActivity {
 		super.onResume();
 		getSupportActionBar().setHomeButtonEnabled(false);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		initData();
 	}
 
 	@Override
@@ -66,9 +69,10 @@ public class ViewActivity extends BaseActivity {
 						if (result instanceof BasicItinerary) {
 							fragment = MyItineraryFragment.newInstance((BasicItinerary)result);
 						} else {
-							fragment = new PlanRecurJourneyFragment();
+				
+							fragment = new MyRecurItineraryFragment();
 							Bundle b = new Bundle();
-							b.putSerializable(PlanRecurJourneyFragment.PARAMS, (BasicRecurrentJourneyParameters)result);
+							b.putSerializable(MyRecurItineraryFragment.PARAMS, (BasicRecurrentJourney)result);
 							fragment.setArguments(b);
 						}
 						FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

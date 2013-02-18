@@ -383,9 +383,14 @@ public class JPHelper {
 			return eu.trentorise.smartcampus.android.common.Utils.convertJSONToObject(res.getBody(),
 					BasicItinerary.class);
 		} else {
-			req.setTargetAddress(Config.TARGET_ADDRESS + Config.CALL_RECUR + "/" + objectId);
+			req = new MessageRequest(GlobalConfig.getAppUrl(instance.mContext), Config.TARGET_ADDRESS + Config.CALL_GET_RECUR
+					+ "/" + objectId);
+			req.setMethod(Method.GET);
+
+			res = instance.getProtocolCarrier().invokeSync(req, Config.APP_TOKEN, getAuthToken());
+			req.setTargetAddress(Config.TARGET_ADDRESS + Config.CALL_GET_RECUR + "/" + objectId);
 			return eu.trentorise.smartcampus.android.common.Utils.convertJSONToObject(res.getBody(),
-					BasicRecurrentJourneyParameters.class);
+					BasicRecurrentJourney.class);
 		}
 	}
 

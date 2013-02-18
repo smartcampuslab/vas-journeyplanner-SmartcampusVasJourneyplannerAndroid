@@ -15,10 +15,8 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.jp;
 
-import it.sayservice.platform.smartplanner.data.message.Leg;
 import it.sayservice.platform.smartplanner.data.message.Position;
 import it.sayservice.platform.smartplanner.data.message.SimpleLeg;
-import it.sayservice.platform.smartplanner.data.message.Transport;
 import it.sayservice.platform.smartplanner.data.message.journey.RecurrentJourney;
 
 import java.util.ArrayList;
@@ -44,7 +42,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
@@ -350,42 +347,13 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 	 
 		ListView myJourneysList = (ListView) getView().findViewById(R.id.myrecitinerary_legs);
 		adapter = new MyRouteItinerariesListAdapter(getSherlockActivity(),
-				R.layout.leg_choices_row, myItineraries,itineraryInformation,myjourney,mylegs,alllegs,saveLayout,mylegsmonitor);
+				R.layout.leg_choices_row, myItineraries,alllegs,saveLayout,mylegsmonitor);
 		myJourneysList.setAdapter(adapter);
 
 		
-		/*io ho gia' questi dati, basta riempire i campi*/
-//		SCAsyncTask<BasicRecurrentJourneyParameters, Void, List<BasicRecurrentJourney>> task = new SCAsyncTask<BasicRecurrentJourneyParameters,Void, List<BasicRecurrentJourney>>(
-//				getSherlockActivity(), new GetMyRecurItineraryProcessor(getSherlockActivity(), adapter));
-//		task.execute(params.getData().getParameters());
 
-//		myJourneysList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-////				FragmentTransaction fragmentTransaction = getSherlockActivity().getSupportFragmentManager()
-////						.beginTransaction();
-////				Fragment fragment = new PlanRecurJourneyFragment();
-////				Bundle b = new Bundle();
-////				b.putSerializable(PlanRecurJourneyFragment.PARAMS, adapter.getItem(position));
-////				fragment.setArguments(b);
-////				fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-////				fragmentTransaction.replace(Config.mainlayout, fragment);
-////				fragmentTransaction.addToBackStack(null);
-////				fragmentTransaction.commit();
-//				
-//				
-//				Toast.makeText(getSherlockActivity(), "click on adapter", Toast.LENGTH_LONG).show();
-//			}
-//		});
 	}
-	public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
-	    for (Entry<T, E> entry : map.entrySet()) {
-	        if (value.equals(entry.getValue())) {
-	            return entry.getKey();
-	        }
-	    }
-	    return null;
-	}
+
 	private class PlanRecurJourneyProcessor extends AbstractAsyncTaskProcessor<BasicRecurrentJourneyParameters, RecurrentJourney> {
 
 
@@ -410,7 +378,7 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 			}
 			ListView myJourneysList = (ListView) getView().findViewById(R.id.myrecitinerary_legs);
 			adapter = new MyRouteItinerariesListAdapter(getSherlockActivity(),
-					R.layout.leg_choices_row, myItineraries,itineraryInformation,myjourney,mylegs,alllegs,saveLayout,mylegsmonitor);
+					R.layout.leg_choices_row, myItineraries,alllegs,saveLayout,mylegsmonitor);
 			myJourneysList.setAdapter(adapter);
 			//adapter.notifyDataSetChanged();
 			saveLayout.setVisibility(View.VISIBLE);
