@@ -369,6 +369,8 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 		@Override
 		public void handleResult(RecurrentJourney result) {
 			/**/
+			 LinearLayout noitems = (LinearLayout) getView().findViewById(R.id.no_items_label);
+
 			 if ((result.getLegs()!=null)&&(!result.getLegs().isEmpty())) {
 				 myjourney = result;
 				 myItineraries=createItineraryFromLegs(result);
@@ -382,6 +384,12 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 			myJourneysList.setAdapter(adapter);
 			//adapter.notifyDataSetChanged();
 			saveLayout.setVisibility(View.VISIBLE);
+			noitems.setVisibility(View.GONE);
+
+			
+			 } else {
+					noitems.setVisibility(View.VISIBLE);
+
 			 }
 		}
 	}
