@@ -64,12 +64,21 @@ public class Config {
 
 	public static final String HOME_FRAGMENT_TAG = "homefragment";
 	public static final String PLAN_NEW_FRAGMENT_TAG = "plannewfragment";
+	public static final String PLAN_NEW_RECUR_FRAGMENT_TAG = "plannewrecurfragment";
+
 	public static final String LEGMAP_FRAGMENT_TAG = "legmap";
 	public static final String MY_JOURNEYS_FRAGMENT_TAG = "myjourneysfragment";
+	public static final String MY_JOURNEY_FRAGMENT_TAG = "myjourneyfragment";
+
+	public static final String MY_RECUR_JOURNEYS_FRAGMENT_TAG = "myrecurjourneysfragment";
+	public static final String MY_RECUR_JOURNEY_FRAGMENT_TAG = "myrecurjourneyfragment";
+
+
 	public static final String PROFILE_FRAGMENT_TAG = "profile";
 	public static final String FAVORITES_FRAGMENT_TAG = "favorites";
 
 	public static final String USER_PREFS = "userprefs";
+	public static final String NOTIFICATIONS = "notifications";
 	// public static final String USER_PREFS_TTYPE_TRANSIT =
 	// TType.TRANSIT.toString(); // default
 	// public static final String USER_PREFS_TTYPE_CAR = TType.CAR.toString();

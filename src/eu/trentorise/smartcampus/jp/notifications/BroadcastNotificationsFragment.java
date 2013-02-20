@@ -73,8 +73,8 @@ public class BroadcastNotificationsFragment extends SherlockFragment {
 							.beginTransaction();
 					// fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 					// fragmentTransaction.detach(self);
-					fragmentTransaction.replace(Config.mainlayout, fragment);
-					fragmentTransaction.addToBackStack("notifications");
+					fragmentTransaction.replace(Config.mainlayout, fragment,Config.NOTIFICATIONS);
+					fragmentTransaction.addToBackStack(fragment.getTag());
 					fragmentTransaction.commit();
 				}
 			}

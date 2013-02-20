@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -64,11 +65,7 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class MyRecurItineraryFragment extends SherlockFragment {
 
 	public static final String PARAMS = "parameters";
-	//adapter ad-hoc solo nome, tipo trasporto e se true e false
 	private List<RecurrentItinerary> myItineraries = new ArrayList<RecurrentItinerary>();
-	//hashmap che mappa <route/agencyid><transport,from,to>
-	RecurrentJourney myjourney = new RecurrentJourney();
-	//private List<SimpleLeg> mylegs;
 	private Map<String, RecurrentItinerary> itineraryInformation = new HashMap<String, RecurrentItinerary>();
 	private Map<String,List<SimpleLeg>> mylegs = new HashMap<String, List<SimpleLeg>>();
 	private Map<String,List<SimpleLeg>> alllegs = new HashMap<String, List<SimpleLeg>>();
@@ -99,11 +96,10 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 				fromPosition = params.getData().getParameters().getFrom();
 			if (params.getData().getParameters().getTo() != null)
 				toPosition = params.getData().getParameters().getTo();
-			/*setta l'array dei miei dati (single itinerary)*/
 			if (params.getClientId()!=null)
 				myItineraries=createItineraryFromLegs(params.getData());
 			else {
-				/*trova le corse*/
+				/*find itineraries*/
             	SCAsyncTask<BasicRecurrentJourneyParameters,Void, RecurrentJourney> task = new SCAsyncTask<BasicRecurrentJourneyParameters,Void, RecurrentJourney>(getSherlockActivity(),
 					new PlanRecurJourneyProcessor(getSherlockActivity()));
 				BasicRecurrentJourneyParameters parameters = new BasicRecurrentJourneyParameters();
@@ -114,9 +110,6 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 				parameters.setName(params.getName());
 				task.execute(parameters);
 				}
-		} else {
-			//init
-			
 		}
 		setHasOptionsMenu(true);
 
@@ -131,7 +124,7 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 				 itineraryInformation.put(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId(), new RecurrentItinerary(leg.getTransport().getRouteId(), leg.getTransport(), leg.getFrom(), leg.getTo(), recurrentJourney.getMonitorLegs().get(leg.getTransport().getAgencyId()+"_"+leg.getTransport().getRouteId())));
 		 }
 		}
-		/*costruisci mylegs coppia agencyid e routeid e lista di leg*/
+		//build mylegs -> agency_routeid, list of legs
 		List<SimpleLeg> alllegslist =null;
 		 mylegsmonitor = null;
 		if (params.getClientId()!=null)
@@ -194,8 +187,8 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 			b.putSerializable(PlanRecurJourneyFragment.PARAMS, params);
 			fragment.setArguments(b);
 			fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-			fragmentTransaction.replace(Config.mainlayout, fragment);
-			fragmentTransaction.addToBackStack(null);
+			fragmentTransaction.replace(Config.mainlayout, fragment,Config.PLAN_NEW_RECUR_FRAGMENT_TAG);
+			fragmentTransaction.addToBackStack(fragment.getTag());
 			fragmentTransaction.commit();
 			return true;
 
@@ -207,7 +200,7 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 			deleteAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					SCAsyncTask<String, Void, Void> task = new SCAsyncTask<String, Void, Void>(getSherlockActivity(),
-							new DeleteMyRecurItineraryProcessor(getSherlockActivity()));
+							new DeleteMyRecurItineraryProcessor(getSherlockActivity(),MyRecurItineraryFragment.this.getTag()));
 					task.execute(params.getName(), params.getClientId());
 					dialog.dismiss();
 					getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
@@ -252,7 +245,7 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 		 saveButton = (Button) getView().findViewById(R.id.myrecitinerary_save);
 		 saveLayout = (LinearLayout) getView().findViewById(R.id.save_layout);
 
-		 //riempi i dati delle label
+		 //fill labels
 		 myRecName.setText(params.getName());
 		 myRecDate.setText(Config.FORMAT_DATE_UI.format(new Date(params.getData().getParameters().getFromDate())));
 		 myRecTime.setText(params.getData().getParameters().getTime());
@@ -286,12 +279,10 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 										    if (alllegs.containsKey(key))
 										    	{
 										    	paramsLegs.addAll(value);
-										    	//paramMap.put(key,true);
 										    	}
 										    else
 										    {
 										    	paramsLegs.addAll(value);
-										    	//paramMap.put(key,false);
 										    }
 										}
 								parameters.setData(params.getData());
@@ -324,12 +315,10 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 									    if (alllegs.containsKey(key))
 								    	{
 								    	paramsLegs.addAll(value);
-								    	//paramMap.put(key,true);
 								    	}
 								    else
 								    {
 								    	paramsLegs.addAll(value);
-								    	//paramMap.put(key,false);
 								    }								    
 									}
 							parameters.setName(params.getName());
@@ -372,7 +361,6 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 			 LinearLayout noitems = (LinearLayout) getView().findViewById(R.id.no_items_label);
 
 			 if ((result.getLegs()!=null)&&(!result.getLegs().isEmpty())) {
-				 myjourney = result;
 				 myItineraries=createItineraryFromLegs(result);
 				 adapter.clear();
 			for (RecurrentItinerary myt : myItineraries) {
@@ -382,7 +370,6 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 			adapter = new MyRouteItinerariesListAdapter(getSherlockActivity(),
 					R.layout.leg_choices_row, myItineraries,alllegs,saveLayout,mylegsmonitor);
 			myJourneysList.setAdapter(adapter);
-			//adapter.notifyDataSetChanged();
 			saveLayout.setVisibility(View.VISIBLE);
 			noitems.setVisibility(View.GONE);
 
@@ -408,27 +395,19 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 
 		@Override
 		public void handleResult(Boolean result) {
-			Intent intent = new Intent(getSherlockActivity(), HomeActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			startActivity(intent);
+			if (params.getClientId()== null)
+				activity.finish();
+			else activity.getSupportFragmentManager().popBackStack();
+
 			Toast.makeText(getSherlockActivity(), getString(R.string.saved_journey), Toast.LENGTH_LONG).show();
-//			FragmentTransaction fragmentTransaction = getSherlockActivity().getSupportFragmentManager()
-//					.beginTransaction();
-//			Fragment fragment = new MyRecurItinerariesFragment();
-//			fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//			fragmentTransaction.replace(Config.mainlayout, fragment);
-//			fragmentTransaction.addToBackStack(null);
-//			fragmentTransaction.commit();
+
 		}
 	}
 	
 	private class MonitorMyRecItineraryProcessor extends AbstractAsyncTaskProcessor<String, Boolean> {
-		//ToggleButton monitorToggleBtn;
-		//TextView monitorLabel;
+
 		public MonitorMyRecItineraryProcessor(SherlockFragmentActivity activity) {
 			super(activity);
-			//monitorToggleBtn= (ToggleButton) activity.findViewById(R.id.myitinerary_toggle);
-			//monitorLabel= (TextView) activity.findViewById(R.id.myitinerary_monitor_label);
 		}
 
 		@Override
@@ -443,19 +422,6 @@ public class MyRecurItineraryFragment extends SherlockFragment {
 		@Override
 		public void handleResult(Boolean result) {
 			params.setMonitor(result);
-//			if (result)
-//				{
-//				monitorToggleBtn.setBackgroundResource(R.drawable.ic_monitor_on);
-//				monitorLabel.setText(getString(R.string.monitor_on));
-//				monitorLabel.setTextAppearance(getSherlockActivity(), R.style.label_jp);
-//
-//				}
-//			else 
-//				{
-//				monitorToggleBtn.setBackgroundResource(R.drawable.ic_monitor_off);
-//				monitorLabel.setText(getString(R.string.monitor_off));
-//				monitorLabel.setTextAppearance(getSherlockActivity(), R.style.label_black_jp);
-//				}
 			getSherlockActivity().invalidateOptionsMenu();
 
 		}

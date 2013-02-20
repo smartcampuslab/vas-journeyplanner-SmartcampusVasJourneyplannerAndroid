@@ -123,7 +123,7 @@ public class MyItineraryFragment extends SherlockFragment {
 			deleteAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					SCAsyncTask<String, Void, Void> task = new SCAsyncTask<String, Void, Void>(getSherlockActivity(),
-							new DeleteMyItineraryProcessor(getSherlockActivity()));
+							new DeleteMyItineraryProcessor(getSherlockActivity(),MyItineraryFragment.this.getTag()));
 					task.execute(myItinerary.getName(), myItinerary.getClientId());
 					dialog.dismiss();
 					getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();

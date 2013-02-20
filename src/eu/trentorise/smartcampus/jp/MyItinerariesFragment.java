@@ -88,8 +88,8 @@ public class MyItinerariesFragment extends SherlockFragment {
 						.beginTransaction();
 				Fragment fragment = MyItineraryFragment.newInstance(adapter.getItem(position));
 				fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-				fragmentTransaction.replace(Config.mainlayout, fragment);
-				fragmentTransaction.addToBackStack(null);
+				fragmentTransaction.replace(Config.mainlayout, fragment,Config.MY_JOURNEYS_FRAGMENT_TAG);
+				fragmentTransaction.addToBackStack(fragment.getTag());
 				fragmentTransaction.commit();
 			}
 		});

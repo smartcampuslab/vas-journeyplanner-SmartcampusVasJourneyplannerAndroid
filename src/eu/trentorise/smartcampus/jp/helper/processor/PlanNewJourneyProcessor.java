@@ -34,10 +34,12 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class PlanNewJourneyProcessor extends AbstractAsyncTaskProcessor<SingleJourney, List<Itinerary>> {
 
 	private SingleJourney singleJourney;
+	private String mTag;
 
-	public PlanNewJourneyProcessor(SherlockFragmentActivity activity, SingleJourney singleJourney) {
+	public PlanNewJourneyProcessor(SherlockFragmentActivity activity, SingleJourney singleJourney, String mTag) {
 		super(activity);
 		this.singleJourney = singleJourney;
+		this.mTag = mTag;
 	}
 
 	@Override
@@ -50,7 +52,7 @@ public class PlanNewJourneyProcessor extends AbstractAsyncTaskProcessor<SingleJo
 		FragmentTransaction fragmentTransaction = ((SherlockFragmentActivity)activity).getSupportFragmentManager().beginTransaction();
 		Fragment fragment = ItineraryChoicesFragment.newInstance(singleJourney, itineraries);
 		fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-		fragmentTransaction.replace(Config.mainlayout, fragment,  Config.PLAN_NEW_FRAGMENT_TAG);
+		fragmentTransaction.replace(Config.mainlayout, fragment, mTag);
 		fragmentTransaction.addToBackStack(fragment.getTag());
 		fragmentTransaction.commit();
 	}

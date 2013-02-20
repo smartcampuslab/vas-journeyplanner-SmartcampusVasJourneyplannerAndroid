@@ -15,15 +15,11 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.jp.helper.processor;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.app.FragmentManager;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-import eu.trentorise.smartcampus.jp.Config;
-import eu.trentorise.smartcampus.jp.MyItinerariesFragment;
-import eu.trentorise.smartcampus.jp.MyRecurItinerariesFragment;
 import eu.trentorise.smartcampus.jp.custom.AbstractAsyncTaskProcessor;
 import eu.trentorise.smartcampus.jp.helper.JPHelper;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
@@ -31,9 +27,11 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class DeleteMyItineraryProcessor extends AbstractAsyncTaskProcessor<String, Void> {
 
 	private String name;
+	private String mTag;
 
-	public DeleteMyItineraryProcessor(SherlockFragmentActivity activity) {
+	public DeleteMyItineraryProcessor(SherlockFragmentActivity activity, String mTag) {
 		super(activity);
+		this.mTag = mTag;
 	}
 
 	@Override
@@ -51,12 +49,7 @@ public class DeleteMyItineraryProcessor extends AbstractAsyncTaskProcessor<Strin
 		Toast toast = Toast.makeText(activity, name + " deleted", Toast.LENGTH_SHORT);
 		toast.show();
 		//activity.getSupportFragmentManager().popBackStackImmediate();
-		FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager()
-				.beginTransaction();
-		Fragment fragment = new MyItinerariesFragment();
-		fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-		fragmentTransaction.replace(Config.mainlayout, fragment);
-		fragmentTransaction.addToBackStack(null);
-		fragmentTransaction.commit();
+		activity.getSupportFragmentManager().popBackStack(mTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
 	}
 }

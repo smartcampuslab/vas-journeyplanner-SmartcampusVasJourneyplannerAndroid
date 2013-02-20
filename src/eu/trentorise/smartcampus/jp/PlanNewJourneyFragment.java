@@ -176,12 +176,6 @@ public class PlanNewJourneyFragment extends SherlockFragment {
 				sj.setFrom(fromPosition);
 				sj.setTo(toPosition);
 
-				// sj.setDate(eu.trentorise.smartcampus.jp.helper.Utils.uiDate2ServerDate(((EditText)
-				// getView().findViewById(
-				// R.id.plannew_date)).getText()));
-				// sj.setDepartureTime(eu.trentorise.smartcampus.jp.helper.Utils.uiTime2ServerTime(((EditText)
-				// getView()
-				// .findViewById(R.id.plannew_time)).getText()));
 
 				// NEW! Date in getTag() support
 				sj.setDate(Config.FORMAT_DATE_SMARTPLANNER.format(fromDate));
@@ -191,7 +185,7 @@ public class PlanNewJourneyFragment extends SherlockFragment {
 				sj.setRouteType(userPrefsHolder.getRouteType());
 
 				SCAsyncTask<SingleJourney, Void, List<Itinerary>> task = new SCAsyncTask<SingleJourney, Void, List<Itinerary>>(
-						getSherlockActivity(), new PlanNewJourneyProcessor(getSherlockActivity(), sj));
+						getSherlockActivity(), new PlanNewJourneyProcessor(getSherlockActivity(), sj,PlanNewJourneyFragment.this.getTag()));
 				task.execute(sj);
 			}
 		});

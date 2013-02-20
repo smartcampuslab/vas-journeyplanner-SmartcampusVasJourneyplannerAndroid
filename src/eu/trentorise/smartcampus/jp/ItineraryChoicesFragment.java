@@ -118,7 +118,7 @@ public class ItineraryChoicesFragment extends SherlockFragment {
 						.beginTransaction();
 				Fragment fragment = ItineraryFragment.newInstance(singleJourney, adapter.getItem(position));
 				// fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-				fragmentTransaction.replace(Config.mainlayout, fragment, Config.PLAN_NEW_FRAGMENT_TAG);
+				fragmentTransaction.replace(Config.mainlayout, fragment, ItineraryChoicesFragment.this.getTag());
 				fragmentTransaction.addToBackStack(fragment.getTag());
 				fragmentTransaction.commit();
 			}

@@ -185,7 +185,7 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 			deleteAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					SCAsyncTask<String, Void, Void> task = new SCAsyncTask<String, Void, Void>(getSherlockActivity(),
-							new DeleteMyRecurItineraryProcessor(getSherlockActivity()));
+							new DeleteMyRecurItineraryProcessor(getSherlockActivity(),PlanRecurJourneyFragment.this.getTag()));
 					task.execute(params.getName(), params.getClientId());
 					dialog.dismiss();
 					getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
@@ -418,8 +418,10 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 				 if (sundayCheckBox.isChecked())
 					 	rj.getRecurrence().add(1);
 
-				/*call the fragment itinerary*/
-				 
+				if (rj.getRecurrence().isEmpty()) {
+						Toast.makeText(getActivity(), R.string.no_days_selected, Toast.LENGTH_SHORT).show();
+						return;
+					}
 				 
 				 
 					FragmentTransaction fragmentTransaction = getSherlockActivity().getSupportFragmentManager()
@@ -429,8 +431,8 @@ public class PlanRecurJourneyFragment extends PlanNewJourneyFragment {
 					b.putSerializable(MyRecurItineraryFragment.PARAMS, params);
 					fragment.setArguments(b);
 					fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-					fragmentTransaction.replace(Config.mainlayout, fragment);
-					fragmentTransaction.addToBackStack(null);
+					fragmentTransaction.replace(Config.mainlayout, fragment,PlanRecurJourneyFragment.this.getTag());
+					fragmentTransaction.addToBackStack(fragment.getTag());
 					fragmentTransaction.commit();
 //				SCAsyncTask<BasicRecurrentJourneyParameters, Void, RecurrentJourney> task = new SCAsyncTask<BasicRecurrentJourneyParameters, Void, RecurrentJourney>(
 //						getSherlockActivity(), new PlanRecurJourneyProcessor(getSherlockActivity()));

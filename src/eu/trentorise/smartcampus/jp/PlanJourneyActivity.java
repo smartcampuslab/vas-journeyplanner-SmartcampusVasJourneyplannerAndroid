@@ -64,7 +64,7 @@ public class PlanJourneyActivity extends BaseActivity {
 //		getSupportActionBar().addTab(tab);
 		
 		tab = getSupportActionBar().newTab().setText(R.string.tab_myrecjourneys);
-		tab.setTabListener(new TabListener<PlanRecurJourneyFragment>(this, Config.MY_JOURNEYS_FRAGMENT_TAG,
+		tab.setTabListener(new TabListener<PlanRecurJourneyFragment>(this, Config.PLAN_NEW_RECUR_FRAGMENT_TAG,
 				PlanRecurJourneyFragment.class, Config.mainlayout));
 		getSupportActionBar().addTab(tab);
 

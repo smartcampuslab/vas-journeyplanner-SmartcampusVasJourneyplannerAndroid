@@ -46,13 +46,13 @@ public class SavedJourneyActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		// New my one off journey
 		ActionBar.Tab tab = getSupportActionBar().newTab().setText(R.string.tab_myoneoffjourneys);
-		tab.setTabListener(new TabListener<MyItinerariesFragment>(this, Config.PLAN_NEW_FRAGMENT_TAG,
+		tab.setTabListener(new TabListener<MyItinerariesFragment>(this, Config.MY_JOURNEYS_FRAGMENT_TAG,
 				MyItinerariesFragment.class, Config.mainlayout));
 		getSupportActionBar().addTab(tab);
 
 		// My rec journeys
 		tab = getSupportActionBar().newTab().setText(R.string.tab_myrecjourneys);
-		tab.setTabListener(new TabListener<MyRecurItinerariesFragment>(this, Config.MY_JOURNEYS_FRAGMENT_TAG,
+		tab.setTabListener(new TabListener<MyRecurItinerariesFragment>(this, Config.MY_RECUR_JOURNEYS_FRAGMENT_TAG,
 				MyRecurItinerariesFragment.class, Config.mainlayout));
 		getSupportActionBar().addTab(tab);
 

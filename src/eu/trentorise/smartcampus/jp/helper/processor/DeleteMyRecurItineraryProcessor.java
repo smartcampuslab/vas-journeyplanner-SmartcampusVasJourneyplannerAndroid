@@ -15,6 +15,7 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.jp.helper.processor;
 
+import android.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
@@ -31,9 +32,10 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class DeleteMyRecurItineraryProcessor extends AbstractAsyncTaskProcessor<String, Void> {
 
 	private String name;
-
-	public DeleteMyRecurItineraryProcessor(SherlockFragmentActivity activity) {
+	private String mTag;
+	public DeleteMyRecurItineraryProcessor(SherlockFragmentActivity activity, String mTag) {
 		super(activity);
+		this.mTag = mTag;
 	}
 
 	@Override
@@ -49,14 +51,16 @@ public class DeleteMyRecurItineraryProcessor extends AbstractAsyncTaskProcessor<
 		
 		Toast toast = Toast.makeText(activity, R.string.deleted_journey, Toast.LENGTH_SHORT);
 		toast.show();
+		activity.getSupportFragmentManager().popBackStack(mTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
 		//activity.getSupportFragmentManager().popBackStackImmediate();
-		FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager()
-				.beginTransaction();
-		Fragment fragment = new MyRecurItinerariesFragment();
-		fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-		fragmentTransaction.replace(Config.mainlayout, fragment);
-		fragmentTransaction.addToBackStack(null);
-		fragmentTransaction.commit();
+//		FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager()
+//				.beginTransaction();
+//		Fragment fragment = new MyRecurItinerariesFragment();
+//		fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//		fragmentTransaction.replace(Config.mainlayout, fragment,Config.MY_RECUR_JOURNEYS_FRAGMENT_TAG);
+//		fragmentTransaction.addToBackStack(fragment.getTag());
+//		fragmentTransaction.commit();
 
 	}
 }

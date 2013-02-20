@@ -91,8 +91,8 @@ public class MyRecurItinerariesFragment extends SherlockFragment {
 						fragmentTransaction
 								.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 						fragmentTransaction
-								.replace(Config.mainlayout, fragment);
-						fragmentTransaction.addToBackStack(null);
+								.replace(Config.mainlayout, fragment,Config.MY_RECUR_JOURNEYS_FRAGMENT_TAG);
+						fragmentTransaction.addToBackStack(fragment.getTag());
 						fragmentTransaction.commit();
 					}
 				});
