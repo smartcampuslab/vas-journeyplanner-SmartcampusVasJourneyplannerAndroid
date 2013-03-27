@@ -102,13 +102,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name="eu.trentorise.smartcampus.jp.ProfileActivity"
             android:configChanges="orientation|screenSize"            
             android:theme="@style/Theme.journeyplanner" />
         <activity
-            android:name=".notifications.BroadcastNotificationsActivity"
+            android:name="eu.trentorise.smartcampus.jp.notifications.BroadcastNotificationsActivity"
             android:configChanges="orientation|screenSize"            
             android:theme="@style/Theme.journeyplanner" />
+         <activity
+            android:name="eu.trentorise.smartcampus.jp.SmartCheckActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_smart_check" >
+        </activity>
 
     </application>
 
