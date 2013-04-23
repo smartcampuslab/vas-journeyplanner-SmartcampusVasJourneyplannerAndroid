@@ -58,6 +58,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="eu.trentorise.smartcampus.jp.ParkingMapActivity"
+            android:theme="@style/Theme.journeyplanner"
+            android:configChanges="orientation|screenSize"
+            />
+        <activity
             android:name="eu.trentorise.smartcampus.jp.AddressSelectActivity"
             android:theme="@style/Theme.journeyplanner" 
             android:configChanges="orientation|screenSize"
