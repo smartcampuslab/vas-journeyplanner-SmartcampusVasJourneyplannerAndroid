@@ -49,13 +49,9 @@
         android:launchMode="singleTask"
         android:logo="@drawable/ic_logo"
         android:theme="@style/Theme.Journeyplanner" >
-        <meta-data
-            android:name="use-feedback"
-            android:value="false" />
-        <meta-data
-            android:name="hidden-notification"
-            android:value="true" />
 
+        <meta-data android:name="use-feedback" android:value="false" />
+        <meta-data android:name="hidden-notification" android:value="true" />
         <uses-library android:name="com.google.android.maps" />
 
         <meta-data
@@ -84,6 +80,7 @@
             android:theme="@style/Theme.Journeyplanner" />
         <activity
             android:name="eu.trentorise.smartcampus.jp.AddressSelectActivity"
+
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.Journeyplanner" />
         <activity
@@ -92,8 +89,9 @@
             android:theme="@style/Theme.Journeyplanner" />
         <activity
             android:name="eu.trentorise.smartcampus.jp.PlanJourneyActivity"
-            android:configChanges="orientation|screenSize"
+
             android:theme="@style/Theme.Journeyplanner"
+            android:configChanges="orientation|screenSize"            
             android:windowSoftInputMode="stateHidden" >
             <intent-filter>
                 <action android:name="eu.trentorise.smartcampus.jp.NAVIGATE" />
@@ -103,20 +101,23 @@
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.jp.PlanRecurJourneyActivity"
-            android:configChanges="orientation|screenSize"
+
             android:theme="@style/Theme.Journeyplanner"
+            android:configChanges="orientation|screenSize"            
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.jp.SavedJourneyActivity"
-            android:configChanges="orientation|screenSize"
+
             android:theme="@style/Theme.Journeyplanner"
+            android:configChanges="orientation|screenSize"            
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.jp.ViewActivity"
-            android:configChanges="orientation|screenSize"
+
             android:theme="@style/Theme.Journeyplanner"
+            android:configChanges="orientation|screenSize"            
             android:windowSoftInputMode="stateHidden" >
             <intent-filter>
                 <action android:name="eu.trentorise.smartcampus.VIEW" />
@@ -128,13 +129,15 @@
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.jp.ProfileActivity"
-            android:configChanges="orientation|screenSize"
+
+            android:configChanges="orientation|screenSize"            
             android:theme="@style/Theme.Journeyplanner" />
         <activity
             android:name="eu.trentorise.smartcampus.jp.notifications.BroadcastNotificationsActivity"
-            android:configChanges="orientation|screenSize"
+
+            android:configChanges="orientation|screenSize"            
             android:theme="@style/Theme.Journeyplanner" />
-        <activity
+         <activity
             android:name="eu.trentorise.smartcampus.jp.SmartCheckActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_smart_check" >
@@ -142,7 +145,9 @@
         <activity
             android:name="eu.trentorise.smartcampus.jp.StopSelectActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.Journeyplanner" />
+
+             android:theme="@style/Theme.Journeyplanner" />
+
     </application>
 
 </manifest>
