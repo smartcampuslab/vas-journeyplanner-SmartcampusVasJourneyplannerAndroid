@@ -24,7 +24,7 @@
  */
 
 {
-    "app_token" : "viaggiarovereto",
+    "app_token" : "viaggiatrento",
     "smartcheck_options" : [
         1,
         4,
@@ -32,12 +32,7 @@
     ],
     "broadcast_notifications_options" : [
         1,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9
+        4
     ],
    "center_map":[
       46.069672,
