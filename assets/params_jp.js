@@ -24,16 +24,16 @@
  */
 
 {
-    "app_token" : "viaggiatrento",
-    "smartcheck_options" : [
-        1,
-        4,
-        5
-    ],
-    "broadcast_notifications_options" : [
-        1,
-        4
-    ],
+   "app_token":"vivitrento",
+   "smartcheck_options":[
+      1,
+      4,
+      5
+   ],
+   "broadcast_notifications_options":[
+      1,
+      4
+   ],
    "center_map":[
       46.069672,
       11.121270
