@@ -25,9 +25,11 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="16" /> 
 
-       <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -59,13 +61,6 @@
         <meta-data
             android:name="hidden-notification"
             android:value="true" />
-        <meta-data
-            android:name="eu.trentorise.smartcampus.account.CLIENT_ID"
-            android:value="bbde6aea-bc7a-4ea0-afc9-91c15e4d6da1" />
-        <meta-data
-            android:name="eu.trentorise.smartcampus.account.CLIENT_SECRET"
-            android:value="8c44736a-56c1-46a5-b572-f577e72c44f2" />
-
         <meta-data
             android:name="eu.trentorise.smartcampus.account.ACCOUNT_TYPE"
             android:value="eu.trentorise.smartcampus.account" />
