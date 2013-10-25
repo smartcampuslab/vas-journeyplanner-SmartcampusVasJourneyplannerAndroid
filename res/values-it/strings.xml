@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="notification_text">%s nuova notifica</string>
+    <string name="notification_text_multi">%s nuove notifiche</string>
+    
+    <string name="jp_notification_name">Notifiche ViaggiaTrento</string>
+
+</resources>

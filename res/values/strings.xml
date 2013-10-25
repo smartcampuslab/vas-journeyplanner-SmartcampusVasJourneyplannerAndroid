@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="notificationprovider_authority">eu.trentorise.smartcampus.jp.notifications</string>
+    <string name="notification_text">%s new notification</string>
+    <string name="notification_text_multi">%s new notifications</string>
+    
+    <string name="jp_notification_name">ViaggiaTrento Notifications</string>
+
+</resources>
