@@ -52,7 +52,6 @@ public class NotificationsSyncAdapter extends AbstractThreadedSyncAdapter {
 
 	private String syncService;
 
-	private static String NOTIFICATION_TYPE_DISCOVERTRENTO = "social";
 	private static String NOTIFICATION_TYPE_JOURNEYPLANNER = "journeyplanner";
 
 	// NotificationHelper consts
@@ -61,6 +60,8 @@ public class NotificationsSyncAdapter extends AbstractThreadedSyncAdapter {
 	private final static String appToken = "journeyplanner";
 
 	private final static String CORE_MOBILITY = "core.mobility";
+	private final static String NOTIFICATION_URL = "/core.communicator";
+	
 
 	private final static int MAX_MSG = 50;
 
@@ -76,7 +77,7 @@ public class NotificationsSyncAdapter extends AbstractThreadedSyncAdapter {
 			String authority = context
 					.getString(R.string.notificationprovider_authority);
 			try {
-				syncService = GlobalConfig.getAppUrl(context) +JPHelper.MOBILITY_URL;
+				syncService = GlobalConfig.getAppUrl(context) +NOTIFICATION_URL;
 				NotificationsHelper.init(context, appToken, syncDbName,
 						syncService, authority, CORE_MOBILITY, MAX_MSG);
 				NotificationsHelper.start(true);
@@ -145,11 +146,7 @@ public class NotificationsSyncAdapter extends AbstractThreadedSyncAdapter {
 		for (Object obj : objsList) {
 			LinkedHashMap<String, Object> notification = (LinkedHashMap<String, Object>) obj;
 			String type = (String) notification.get("type");
-			if (type.equalsIgnoreCase(NOTIFICATION_TYPE_DISCOVERTRENTO)) {
-				dtList.add(notification);
-			} else if (type.equalsIgnoreCase(NOTIFICATION_TYPE_JOURNEYPLANNER)) {
-				jpList.add(notification);
-			}
+			jpList.add(notification);
 		}
 
 		List<List<Object>> notificationsLists = new ArrayList<List<Object>>();
