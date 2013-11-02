@@ -31,15 +31,12 @@ import android.content.SyncResult;
 import android.os.Bundle;
 import android.util.Log;
 import eu.trentorise.smartcampus.android.common.GlobalConfig;
-import eu.trentorise.smartcampus.communicator.model.Notification;
-import eu.trentorise.smartcampus.jp.Config;
+import eu.trentorise.smartcampus.communicator.model.DBNotification;
 import eu.trentorise.smartcampus.jp.R;
-import eu.trentorise.smartcampus.jp.helper.JPHelper;
 import eu.trentorise.smartcampus.jp.notifications.NotificationsFragmentActivityJP;
 import eu.trentorise.smartcampus.notifications.NotificationsHelper;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 import eu.trentorise.smartcampus.storage.sync.SyncData;
-import eu.trentorise.smartcampus.storage.sync.SyncStorage;
 
 /**
  * SyncAdapter implementation for syncing sample SyncAdapter contacts to the
@@ -51,8 +48,6 @@ public class NotificationsSyncAdapter extends AbstractThreadedSyncAdapter {
 	private final Context mContext;
 
 	private String syncService;
-
-	private static String NOTIFICATION_TYPE_JOURNEYPLANNER = "journeyplanner";
 
 	// NotificationHelper consts
 	private final static String syncDbName = "journeyplanner_notifications";
@@ -99,9 +94,9 @@ public class NotificationsSyncAdapter extends AbstractThreadedSyncAdapter {
 			if (data.getUpdated() != null
 					&& !data.getUpdated().isEmpty()
 					&& data.getUpdated().containsKey(
-							Notification.class.getCanonicalName()))
+							DBNotification.class.getCanonicalName()))
 				onDBUpdate(data.getUpdated().get(
-						Notification.class.getCanonicalName()));
+						DBNotification.class.getCanonicalName()));
 		} catch (SecurityException e) {
 			handleSecurityProblem();
 		} catch (Exception e) {
@@ -145,7 +140,6 @@ public class NotificationsSyncAdapter extends AbstractThreadedSyncAdapter {
 
 		for (Object obj : objsList) {
 			LinkedHashMap<String, Object> notification = (LinkedHashMap<String, Object>) obj;
-			String type = (String) notification.get("type");
 			jpList.add(notification);
 		}
 
