@@ -47,16 +47,10 @@ public class NotificationsSyncAdapter extends AbstractThreadedSyncAdapter {
 
 	private final Context mContext;
 
-	private String syncService;
-
 	// NotificationHelper consts
-	private final static String syncDbName = "journeyplanner_notifications";
-
 	private final static String appToken = "journeyplanner";
 
 	private final static String CORE_MOBILITY = "core.mobility";
-	private final static String NOTIFICATION_URL = "/core.communicator";
-	
 
 	private final static int MAX_MSG = 50;
 
@@ -72,9 +66,7 @@ public class NotificationsSyncAdapter extends AbstractThreadedSyncAdapter {
 			String authority = context
 					.getString(R.string.notificationprovider_authority);
 			try {
-				syncService = GlobalConfig.getAppUrl(context) +NOTIFICATION_URL;
-				NotificationsHelper.init(context, appToken, syncDbName,
-						syncService, authority, CORE_MOBILITY, MAX_MSG);
+				NotificationsHelper.init(context, appToken, authority, CORE_MOBILITY, MAX_MSG);
 				NotificationsHelper.start(true);
 			} catch (Exception e) {
 				Log.e(TAG,
@@ -154,17 +146,13 @@ public class NotificationsSyncAdapter extends AbstractThreadedSyncAdapter {
 
 				LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) list
 						.get(0);
-				icon = R.drawable.ic_launcher;
+				icon = R.drawable.jp;
 				intent = new Intent(mContext,
 						NotificationsFragmentActivityJP.class);
 
 				if (intent != null) {
 					intent.putExtra(NotificationsHelper.PARAM_APP_TOKEN,
 							appToken);
-					intent.putExtra(NotificationsHelper.PARAM_SYNC_DB_NAME,
-							syncDbName);
-					intent.putExtra(NotificationsHelper.PARAM_SYNC_SERVICE,
-							syncService);
 					intent.putExtra(
 							NotificationsHelper.PARAM_AUTHORITY,
 							mContext.getString(R.string.notificationprovider_authority));
