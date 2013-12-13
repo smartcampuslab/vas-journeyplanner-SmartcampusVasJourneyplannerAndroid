@@ -1,0 +1,1 @@
+{"stopsId":["Verona-PortaNuova_5","Domegliara-S.A_5","Peri_5","Ala_5","Rovereto_5","Trento_5","Mezzocorona_5","Ora_5","Bronzolo_5","Bolzano_5"],"stops":["VeronaPN FS","Domegliara-S.Ambrogio FS","Peri FS","Ala FS","Rovereto FS","Trento FS","Mezzocorona FS","Ora-Auer FS","Bronzolo FS","Bolzano FS"],"tripIds":["R10996"],"compressedTimes":"0838085609070918092709410954101210181038"}

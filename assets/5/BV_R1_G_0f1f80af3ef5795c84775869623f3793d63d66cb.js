@@ -1,0 +1,1 @@
+{"stopsId":["Bolzano_5","Trento_5","Rovereto_5","Verona-PortaNuova_5"],"stops":["Bolzano FS","Trento FS","Rovereto FS","VeronaPN FS"],"tripIds":["R10953","EC81"],"compressedTimes":"|06400656|1131120212171256"}

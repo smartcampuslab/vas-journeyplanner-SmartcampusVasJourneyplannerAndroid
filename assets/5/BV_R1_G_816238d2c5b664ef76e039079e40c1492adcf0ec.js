@@ -1,0 +1,1 @@
+{"stopsId":["Trento_5","Rovereto_5"],"stops":["Trento FS","Rovereto FS"],"tripIds":["R10953"],"compressedTimes":"06400656"}
