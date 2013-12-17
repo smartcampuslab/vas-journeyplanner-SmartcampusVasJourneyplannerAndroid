@@ -91,7 +91,6 @@
             android:launchMode="singleTask" >
 <!--             <intent-filter> -->
 <!--                 <action android:name="android.intent.action.MAIN" /> -->
-
 <!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
 <!--             </intent-filter> -->
             <intent-filter>
@@ -172,20 +171,20 @@
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
             android:theme="@style/Theme.Journeyplanner" />
         <activity
-            android:name="eu.trentorise.smartcampus.jp.custom.TutorialActivity"
+            android:name="eu.trentorise.smartcampus.jp.notifications.NotificationsFragmentActivityJP"
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Journeyplanner" >
+        </activity>
+        <activity
+            android:name="com.github.espiandev.showcaseview.TourActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
             android:theme="@style/TutorialTheme" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="eu.trentorise.smartcampus.jp.notifications.NotificationsFragmentActivityJP"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
-            android:launchMode="singleTask"
-            android:theme="@style/Theme.Journeyplanner" >
-        </activity>
-
+        
         <service
             android:name="eu.trentorise.smartcampus.jp.syncadapter.NotificationsSyncService"
             android:exported="false" >
