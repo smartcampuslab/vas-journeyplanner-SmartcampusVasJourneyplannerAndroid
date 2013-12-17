@@ -162,7 +162,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
             android:theme="@style/Theme.Journeyplanner" />
         <activity
-            android:name="eu.trentorise.smartcampus.jp.SmartCheckActivity"
+            android:name="eu.trentorise.smartcampus.jp.SmartCheckDirectActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
             android:label="@string/title_activity_smart_check" >
         </activity>
